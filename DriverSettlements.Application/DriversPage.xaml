@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.DriversPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0" Text="{x:Static res:ApplicationStrings.ShellContent_DriverList}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="EditButton"                        
+                        Text="Edytuj" LoadingText="Edytuj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="EditButton_Clicked"/>
+                <customControls:ButtonControl x:Name="DeleteButton"                        
+                        Text="Usuń" LoadingText="Usuń" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="DeleteButton_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid
+        Padding="5"
+        RowDefinitions="50,*,35"
+        ColumnDefinitions="*">
+        <Grid Grid.Row="0" Grid.Column="0" ColumnSpacing="3" RowDefinitions="*" ColumnDefinitions="*,Auto,Auto,Auto">
+            <SearchBar Grid.Row="0" Grid.Column="0"
+                x:Name="SearchBar"
+                Placeholder="{x:Static res:ApplicationStrings.DriversPage_SearchDriver}"
+                TextChanged="SearchBar_TextChanged" SearchButtonPressed="SearchBar_SearchButtonPressed"> 
+            </SearchBar>
+            <customControls:ToggleButton x:Name="NumberOfExternalServices1"
+                Grid.Row="0" Grid.Column="1"
+                Toggled="False"
+                Text="1" BorderColor="Black"
+                ToggleOffColor="LightGray"
+                Clicked="ToggleButton_Clicked"
+                WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
+            <customControls:ToggleButton x:Name="NumberOfExternalServices2"
+                Grid.Row="0" Grid.Column="2"
+                Toggled="False"
+                Text="2" BorderColor="Black"
+                ToggleOffColor="LightGray"
+                Clicked="ToggleButton_Clicked"
+                WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
+            <customControls:ToggleButton x:Name="NumberOfExternalServices3"
+                Grid.Row="0" Grid.Column="3"
+                Toggled="False"
+                Text="3" BorderColor="Black"
+                ToggleOffColor="LightGray"
+                Clicked="ToggleButton_Clicked"
+                WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
+        </Grid>
+        <ListView Grid.Row="1" Grid.Column="0"
+            x:Name="driversView"
+            BackgroundColor="Transparent"
+            SeparatorColor="Silver"
+            RowHeight="50"
+            ItemTapped="driversView_ItemTapped" 
+            Margin="5,5,5,5" IsPullToRefreshEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid RowDefinitions="Auto,28">
+                            <Grid.BackgroundColor>
+                                <Binding Path="Selected">
+                                    <Binding.Converter>
+                                        <helpers:SelectedItemBackgroudColorConverter 
+                                                SelectedItemColor="OrangeRed"/>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Grid.BackgroundColor>
+                            <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+                                <Label Text="{Binding CompanyName}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Row="1" Spacing="5" HorizontalOptions="Center">
+                                <customControls:ButtonControl
+                                        Text="Bolt" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                    <customControls:ButtonControl.BackgroundColor>
+                                        <Binding Path="BoltName">
+                                            <Binding.Converter>
+                                                <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </customControls:ButtonControl.BackgroundColor>
+                                </customControls:ButtonControl>
+                                <customControls:ButtonControl
+                                        Text="Uber" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                    <customControls:ButtonControl.BackgroundColor>
+                                        <Binding Path="UberName">
+                                            <Binding.Converter>
+                                                <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </customControls:ButtonControl.BackgroundColor>
+                                </customControls:ButtonControl>
+                                <customControls:ButtonControl
+                                        Text="Freenow" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                    <customControls:ButtonControl.BackgroundColor>
+                                        <Binding Path="FreenowName">
+                                            <Binding.Converter>
+                                                <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </customControls:ButtonControl.BackgroundColor>
+                                </customControls:ButtonControl>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <customControls:ButtonControl Grid.Row="2" Grid.Column="0"
+                Text="{x:Static res:ApplicationStrings.DriversPage_AddDriver}"
+                LoadingText="{x:Static res:ApplicationStrings.DriversPage_AddDriver}"
+                Clicked="Button_Clicked"
+                WidthRequest="180" HeightRequest="35"
+                HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>

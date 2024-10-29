@@ -1,0 +1,45 @@
+﻿var url = 'https://supplier.uber.com/graphql';
+var payload = {
+  operationName: 'generateVsPaymentReport',
+  variables: {
+    orgUUID: '{orgUUID}',
+    paymentReportType: 'REPORT_TYPE_PAYMENTS_DRIVER',
+    startDate: '{startDate}',
+    endDate: '{endDate}',
+  },
+  query: `mutation generateVsPaymentReport(
+      $orgUUID: ID!,
+      $paymentReportType: String!,
+      $startDate: Date!,
+      $endDate: Date!,
+      $startTimeUnixMillis: String,
+      $endTimeUnixMillis: String
+    ) {
+      generateVsPaymentReport(
+        orgUUID: $orgUUID,
+        paymentReportType: $paymentReportType,
+        startDate: $startDate,
+        endDate: $endDate,
+        startTimeUnixMillis: $startTimeUnixMillis,
+        endTimeUnixMillis: $endTimeUnixMillis
+      ) {
+        reportID
+        __typename
+      }
+    }`,
+};
+const xhr = new XMLHttpRequest();
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.setRequestHeader('X-Csrf-Token', 'x');
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      console.log('Status Code:', xhr.status);
+      console.log('Response Data:', xhr.responseText);
+    } else {
+      console.error('Error:', xhr.statusText);
+    }
+  }
+};
+xhr.send(JSON.stringify(payload));

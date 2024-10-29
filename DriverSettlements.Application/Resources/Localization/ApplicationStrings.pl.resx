@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Actions_AddNew" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="Actions_Blocked" xml:space="preserve">
+    <value>Zablokowany</value>
+  </data>
+  <data name="Actions_Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Actions_Confirm" xml:space="preserve">
+    <value>Zatwierdź</value>
+  </data>
+  <data name="Actions_Confirmed" xml:space="preserve">
+    <value>Potwierdzony</value>
+  </data>
+  <data name="Actions_Default" xml:space="preserve">
+    <value>Domyślny</value>
+  </data>
+  <data name="Actions_Delete" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
+  <data name="Actions_Deleted" xml:space="preserve">
+    <value>Usunięty</value>
+  </data>
+  <data name="Actions_Download" xml:space="preserve">
+    <value>Pobierz</value>
+  </data>
+  <data name="Actions_Edit" xml:space="preserve">
+    <value>Edytuj</value>
+  </data>
+  <data name="Actions_FieldIsRequired" xml:space="preserve">
+    <value>Pole {0} jest wymagane</value>
+  </data>
+  <data name="Actions_From" xml:space="preserve">
+    <value>od</value>
+  </data>
+  <data name="Actions_InvalidFieldValueLength" xml:space="preserve">
+    <value>Długość wartości pola '{0}' jest niewłaściwa</value>
+  </data>
+  <data name="Actions_MakeTest" xml:space="preserve">
+    <value>Testuj</value>
+  </data>
+  <data name="Actions_No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="Actions_Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="Actions_Save" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="Actions_SavingData" xml:space="preserve">
+    <value>Zapisywanie danych</value>
+  </data>
+  <data name="Actions_Testing" xml:space="preserve">
+    <value>Testowanie</value>
+  </data>
+  <data name="Actions_To" xml:space="preserve">
+    <value>do</value>
+  </data>
+  <data name="Actions_Upload" xml:space="preserve">
+    <value>Wgraj</value>
+  </data>
+  <data name="Actions_Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>System Rozliczania Kierowców</value>
+  </data>
+  <data name="ApplicationProfiles_Active" xml:space="preserve">
+    <value>&gt;Aktywny&lt;</value>
+  </data>
+  <data name="ApplicationProfiles_AddingProfile" xml:space="preserve">
+    <value>Dodawanie profilu</value>
+  </data>
+  <data name="ApplicationProfiles_AddProfile" xml:space="preserve">
+    <value>Dodaj profil</value>
+  </data>
+  <data name="ApplicationProfiles_Available" xml:space="preserve">
+    <value>Dostępny</value>
+  </data>
+  <data name="ApplicationProfiles_DefaultName" xml:space="preserve">
+    <value>Profil domyślny</value>
+  </data>
+  <data name="ApplicationProfiles_DeletingProfile" xml:space="preserve">
+    <value>Usuwanie profilu</value>
+  </data>
+  <data name="ApplicationProfiles_DeletingProfileQuestion" xml:space="preserve">
+    <value>Czy napewno chesz usunąć profil '{0}'?</value>
+  </data>
+  <data name="ApplicationProfiles_MarkAsDefault" xml:space="preserve">
+    <value>Ustaw jako domyślny</value>
+  </data>
+  <data name="ApplicationProfiles_MarkingProfileAsDefault" xml:space="preserve">
+    <value>Oznaczanie profilu jako domyślny</value>
+  </data>
+  <data name="ApplicationProfiles_ProfileName" xml:space="preserve">
+    <value>Nazwa profilu</value>
+  </data>
+  <data name="ApplicationProfiles_SwitchingProfiles" xml:space="preserve">
+    <value>Przełączanie profili</value>
+  </data>
+  <data name="ApplicationProfiles_SwitchToProfile" xml:space="preserve">
+    <value>Przełącz na ten profil</value>
+  </data>
+  <data name="ApplicationProfiles_UniqueProfileNameMessage" xml:space="preserve">
+    <value>Nazwa profilu nie jest unikalna</value>
+  </data>
+  <data name="Calendar_Week" xml:space="preserve">
+    <value>Tydzień</value>
+  </data>
+  <data name="Calendar_Year" xml:space="preserve">
+    <value>Rok</value>
+  </data>
+  <data name="CloseApplication" xml:space="preserve">
+    <value>Zamknij aplikację</value>
+  </data>
+  <data name="DriverDetailsPage_AddingDriver" xml:space="preserve">
+    <value>Dodawanie kierowcy</value>
+  </data>
+  <data name="DriverDetailsPage_DriverName" xml:space="preserve">
+    <value>Nazwa kierowcy</value>
+  </data>
+  <data name="DriversConfirmationAndMappingsPage_NumberInfo" xml:space="preserve">
+    <value>{0} z {1}</value>
+  </data>
+  <data name="DriversPage_AddDriver" xml:space="preserve">
+    <value>Dodaj kierowcę</value>
+  </data>
+  <data name="DriversPage_DeletingDriver" xml:space="preserve">
+    <value>Usuwanie kierowcy</value>
+  </data>
+  <data name="DriversPage_DeletingDriverQuestion" xml:space="preserve">
+    <value>Czy napewno chesz usunąć kierowcę '{0}'?</value>
+  </data>
+  <data name="DriversPage_MapWithDriver" xml:space="preserve">
+    <value>Mapuj z kierowcą</value>
+  </data>
+  <data name="DriversPage_SearchDriver" xml:space="preserve">
+    <value>Wyszukaj kierowcę</value>
+  </data>
+  <data name="Driver_ApplicationFee" xml:space="preserve">
+    <value>Opłata za aplikację</value>
+  </data>
+  <data name="ExceptionMessageTitle" xml:space="preserve">
+    <value>Wystąpiła sytuacja wyjątkowa.</value>
+  </data>
+  <data name="ExternalReports_DownloadingWeeklyReportBolt" xml:space="preserve">
+    <value>Pobieranie tygodniowego raportu Bolt</value>
+  </data>
+  <data name="ExternalReports_DownloadingWeeklyReportFreenow" xml:space="preserve">
+    <value>Pobieranie tygodniowego raportu Freenow</value>
+  </data>
+  <data name="ExternalReports_DownloadingWeeklyReportUber" xml:space="preserve">
+    <value>Pobieranie tygodniowego raportu Uber</value>
+  </data>
+  <data name="ExternalReports_ReportBolt" xml:space="preserve">
+    <value>Raport Bolt</value>
+  </data>
+  <data name="ExternalReports_ReportFreenow" xml:space="preserve">
+    <value>Raport Freenow</value>
+  </data>
+  <data name="ExternalReports_ReportUber" xml:space="preserve">
+    <value>Raport Uber</value>
+  </data>
+  <data name="ExternalReports_UploadingWeeklyReportBolt" xml:space="preserve">
+    <value>Wgrywanie tygodniowego raportu Bolt</value>
+  </data>
+  <data name="ExternalReports_UploadingWeeklyReportFreenow" xml:space="preserve">
+    <value>Wgrywanie tygodniowego raportu Freenow</value>
+  </data>
+  <data name="ExternalReports_UploadingWeeklyReportUber" xml:space="preserve">
+    <value>Wgrywanie tygodniowego raportu Uber</value>
+  </data>
+  <data name="ExternalServicesSettings_TestReportDownloadingCompletedSuccessfully" xml:space="preserve">
+    <value>Test pobrania raportu {0} zakończył się pomyślnie</value>
+  </data>
+  <data name="HttpRequestException" xml:space="preserve">
+    <value>Sprawdź proszę połączenie internetowe i spróbuj uruchomić aplikację jeszcze raz. Jeśli problem nie ustąpi to spróbuj skorzystać z aplikacji w poźniejszym terminie.</value>
+  </data>
+  <data name="InvitationKey_SendingInvitationKey" xml:space="preserve">
+    <value>Wysyłanie kodu zaproszenia</value>
+  </data>
+  <data name="InvitationKey_SendInvitationKey" xml:space="preserve">
+    <value>Wyślij kod zaproszenia</value>
+  </data>
+  <data name="InvitationPage_ApplicationRegistering" xml:space="preserve">
+    <value>Rejestracja aplikacji</value>
+  </data>
+  <data name="InvitationPage_InputInvitationCode" xml:space="preserve">
+    <value>Wprowadź kod zaproszenia:</value>
+  </data>
+  <data name="InvitationPage_InputValidInvitationCode" xml:space="preserve">
+    <value>Wprowadź poprawny kod zaproszenia.</value>
+  </data>
+  <data name="InvitationPage_RegisterApplication" xml:space="preserve">
+    <value>Rejestruj aplikację</value>
+  </data>
+  <data name="LegalEntity_ApplicationFeeBaseValue" xml:space="preserve">
+    <value>Opłata za aplikację</value>
+  </data>
+  <data name="LegalEntity_ApplicationFeeChargeDriver" xml:space="preserve">
+    <value>Obciąż kierowcę</value>
+  </data>
+  <data name="LegalEntity_CompanyName" xml:space="preserve">
+    <value>Nazwa firmy</value>
+  </data>
+  <data name="LegalEntity_EmailAddress" xml:space="preserve">
+    <value>Adres e-mail</value>
+  </data>
+  <data name="LegalEntity_FriendlyName" xml:space="preserve">
+    <value>Nazwa skrócona</value>
+  </data>
+  <data name="LegalEntity_InvitationKey" xml:space="preserve">
+    <value>Kod zaproszenia</value>
+  </data>
+  <data name="MasterAdminSettingsPage_AddDefaultReports" xml:space="preserve">
+    <value>Dodaj domyślne raporty</value>
+  </data>
+  <data name="MasterAdminSettingsPage_AddSettlementTypes" xml:space="preserve">
+    <value>Dodaj typy rozliczeń</value>
+  </data>
+  <data name="Reports_BasicReport" xml:space="preserve">
+    <value>Raport tygodniowy</value>
+  </data>
+  <data name="Reports_OtherReport" xml:space="preserve">
+    <value>Inny raport </value>
+  </data>
+  <data name="SettlementType.(others)" xml:space="preserve">
+    <value>(inne)</value>
+  </data>
+  <data name="SettlementType.1/2TaxOnFuel" xml:space="preserve">
+    <value>1/2 VAT od paliwa</value>
+  </data>
+  <data name="SettlementType.8/100TaxOnGrossRevenue" xml:space="preserve">
+    <value>8% VAT od utargu brutto</value>
+  </data>
+  <data name="SettlementType.ApplicationFee" xml:space="preserve">
+    <value>Opłata za aplikację</value>
+  </data>
+  <data name="SettlementType.CarRental" xml:space="preserve">
+    <value>Najem samochodu</value>
+  </data>
+  <data name="SettlementType.CompanyAccount" xml:space="preserve">
+    <value>Konto spółki</value>
+  </data>
+  <data name="SettlementType.DeductedMoney" xml:space="preserve">
+    <value>Potrącenie</value>
+  </data>
+  <data name="SettlementType.Deposit" xml:space="preserve">
+    <value>Depozyt</value>
+  </data>
+  <data name="SettlementType.DriverName" xml:space="preserve">
+    <value>Kierowca</value>
+  </data>
+  <data name="SettlementType.ExtraMoney" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="SettlementType.InsuranceIncreasing" xml:space="preserve">
+    <value>Zwyżka ubezpieczenia</value>
+  </data>
+  <data name="SettlementType.MandateContract" xml:space="preserve">
+    <value>Mandat</value>
+  </data>
+  <data name="SettlementType.TOTAL" xml:space="preserve">
+    <value>RAZEM</value>
+  </data>
+  <data name="ShellContent_CarInspections" xml:space="preserve">
+    <value>Inspekcje</value>
+  </data>
+  <data name="ShellContent_Cars" xml:space="preserve">
+    <value>Samochody</value>
+  </data>
+  <data name="ShellContent_DriverList" xml:space="preserve">
+    <value>Kierowcy</value>
+  </data>
+  <data name="ShellContent_ExternalServices" xml:space="preserve">
+    <value>Usługi zewnętrzne</value>
+  </data>
+  <data name="ShellContent_ExtrasAndDeducts" xml:space="preserve">
+    <value>Rozliczenia</value>
+  </data>
+  <data name="ShellContent_FuelBills" xml:space="preserve">
+    <value>Rachunki za paliwo</value>
+  </data>
+  <data name="ShellContent_Info" xml:space="preserve">
+    <value>Informacje</value>
+  </data>
+  <data name="ShellContent_InformationForDrivers" xml:space="preserve">
+    <value>Informacje dla kierowców</value>
+  </data>
+  <data name="ShellContent_Invitation" xml:space="preserve">
+    <value>Rejestracja aplikacji</value>
+  </data>
+  <data name="ShellContent_MasterAdminSettings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="ShellContent_Others" xml:space="preserve">
+    <value>Inne</value>
+  </data>
+  <data name="ShellContent_Profiles" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ShellContent_Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="ShellContent_Tenants" xml:space="preserve">
+    <value>Najemcy</value>
+  </data>
+  <data name="ShellContent_Weeks" xml:space="preserve">
+    <value>Tygodnie</value>
+  </data>
+  <data name="TenantDetailsPage_AddingTenant" xml:space="preserve">
+    <value>Dodawanie najemny</value>
+  </data>
+  <data name="TenantsPage_AddTenant" xml:space="preserve">
+    <value>Dodaj najemcę</value>
+  </data>
+  <data name="TenantsPage_DeletingTenant" xml:space="preserve">
+    <value>Usuwanie najemny</value>
+  </data>
+  <data name="TenantsPage_DeletingTenantQuestion" xml:space="preserve">
+    <value>Czy napewno chesz usunąć najemcę '{0}'?</value>
+  </data>
+  <data name="TenantsPage_SearchTenant" xml:space="preserve">
+    <value>Wyszukaj najemnę</value>
+  </data>
+  <data name="TenantWeekDetailsPage_WrongBoltReportName" xml:space="preserve">
+    <value>Oczekiwana nazwa raportu zaczynająca się od frazy:{0}</value>
+  </data>
+  <data name="TenantWeekDetailsPage_WrongFreenowReportName" xml:space="preserve">
+    <value>Oczekiwana nazwa raportu: {0}</value>
+  </data>
+  <data name="TenantWeekDetailsPage_WrongUberReportName" xml:space="preserve">
+    <value>Oczekiwana nazwa raportu zaczynająca się od frazy: {0}</value>
+  </data>
+  <data name="TenantWeeksPage_DownloadingExternalReports" xml:space="preserve">
+    <value>Pobieranie raportów zewnętrzych</value>
+  </data>
+  <data name="TenantWeeksPage_DriversCode" xml:space="preserve">
+    <value>KIER</value>
+  </data>
+  <data name="TenantWeeksPage_DriversFullName" xml:space="preserve">
+    <value>Porządkowanie nazw kierowców</value>
+  </data>
+  <data name="TenantWeeksPage_ExternalReportsCode" xml:space="preserve">
+    <value>B/U/F</value>
+  </data>
+  <data name="TenantWeeksPage_ExternalReportsFullName" xml:space="preserve">
+    <value>Raporty z Bolta, Ubera i Freenow</value>
+  </data>
+  <data name="TenantWeeksPage_FuelBillsCode" xml:space="preserve">
+    <value>RACH</value>
+  </data>
+  <data name="TenantWeeksPage_LoadingWeeks" xml:space="preserve">
+    <value>Pobieranie tygodni</value>
+  </data>
+  <data name="TenantWeeksPage_RentsCode" xml:space="preserve">
+    <value>NAJ</value>
+  </data>
+  <data name="TenantWeeksPage_RevisingDriversList" xml:space="preserve">
+    <value>Weryfikownie listy kierowców</value>
+  </data>
+  <data name="TenantWeeksPage_SummaryCode" xml:space="preserve">
+    <value>ROZL</value>
+  </data>
+  <data name="TenantWeeksPage_SummaryFullName" xml:space="preserve">
+    <value>Podsumowanie tygodnia</value>
+  </data>
+  <data name="TenantWeeksPage_WeekDetails" xml:space="preserve">
+    <value>Szczegóły &gt;&gt;</value>
+  </data>
+  <data name="Tenant_BoltName" xml:space="preserve">
+    <value>Nazwa w Bolt</value>
+  </data>
+  <data name="Tenant_CarRentals" xml:space="preserve">
+    <value>Najem samochodów</value>
+  </data>
+  <data name="Tenant_FreenowName" xml:space="preserve">
+    <value>Nazwa we Freenow</value>
+  </data>
+  <data name="Tenant_TariffPlans" xml:space="preserve">
+    <value>Plany taryfowe</value>
+  </data>
+  <data name="Tenant_UberName" xml:space="preserve">
+    <value>Nazwa w Uber</value>
+  </data>
+  <data name="WelcomePage_ApplicationIsStarting" xml:space="preserve">
+    <value>Trwa uruchamianie aplikacji</value>
+  </data>
+  <data name="WelcomePage_PleaseWait" xml:space="preserve">
+    <value>Proszę czekać ...</value>
+  </data>
+</root>

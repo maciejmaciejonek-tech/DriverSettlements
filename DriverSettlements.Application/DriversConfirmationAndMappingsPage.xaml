@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.DriversConfirmationAndMappingsPage">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="5" Margin="5,5,5,5">
+        <HorizontalStackLayout Grid.Row="0" Spacing="5" HorizontalOptions="Center">
+            <customControls:ButtonControl x:Name="PrevButton"
+                    Clicked="PrevButton_Clicked"
+                    Text="&lt;" WidthRequest="50"/>
+            <Label x:Name="NumberInfo" 
+                VerticalOptions="Center"/>
+            <customControls:ButtonControl x:Name="NextButton"
+                    Clicked="NextButton_Clicked"
+                    Text="&gt;" WidthRequest="50"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
+            <Label x:Name="DriverNameInfo" 
+                   Text="{Binding Driver.CompanyName}"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="2" Spacing="5" HorizontalOptions="Center">
+            <customControls:ButtonControl x:Name="BoltInfo"
+                                        Text="Bolt" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                <customControls:ButtonControl.BackgroundColor>
+                    <Binding Path="Driver.BoltName">
+                        <Binding.Converter>
+                            <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                        </Binding.Converter>
+                    </Binding>
+                </customControls:ButtonControl.BackgroundColor>
+            </customControls:ButtonControl>
+            <customControls:ButtonControl x:Name="UberInfo"
+                                        Text="Uber" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                <customControls:ButtonControl.BackgroundColor>
+                    <Binding Path="Driver.UberName">
+                        <Binding.Converter>
+                            <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                        </Binding.Converter>
+                    </Binding>
+                </customControls:ButtonControl.BackgroundColor>
+            </customControls:ButtonControl>
+            <customControls:ButtonControl x:Name="FreenowInfo"
+                                        Text="Freenow" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                <customControls:ButtonControl.BackgroundColor>
+                    <Binding Path="Driver.FreenowName">
+                        <Binding.Converter>
+                            <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                        </Binding.Converter>
+                    </Binding>
+                </customControls:ButtonControl.BackgroundColor>
+            </customControls:ButtonControl>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="5">
+            <customControls:ButtonControl x:Name="ConfirmButton" 
+                Text="{x:Static res:ApplicationStrings.Actions_Confirm}"
+                LoadingText="{x:Static res:ApplicationStrings.Actions_Confirm}"
+                Clicked="ConfirmButton_Clicked"
+                WidthRequest="150"/>
+            <customControls:ButtonControl x:Name="MapWithDriverButton" 
+                Text="{x:Static res:ApplicationStrings.DriversPage_MapWithDriver}"
+                LoadingText="{x:Static res:ApplicationStrings.DriversPage_MapWithDriver}"
+                Clicked="MapWithDriverButton_Clicked"
+                WidthRequest="150"/>
+        </HorizontalStackLayout>
+        <Grid Grid.Row="4" Padding="5" RowDefinitions="50,*" ColumnDefinitions="*">
+            <SearchBar Grid.Row="0" Grid.Column="0"
+                x:Name="SearchBar"
+                Placeholder="{x:Static res:ApplicationStrings.DriversPage_SearchDriver}"
+                TextChanged="SearchBar_TextChanged">
+            </SearchBar>
+            <ListView Grid.Row="1" Grid.Column="0"
+            x:Name="driversView"
+            BackgroundColor="Transparent"
+            SeparatorColor="Silver"
+            ItemTapped="driversView_ItemTapped"
+            RowHeight="50"
+            Margin="5,5,5,5" IsPullToRefreshEnabled="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid RowDefinitions="Auto,32">
+                                <Grid.BackgroundColor>
+                                    <Binding Path="Selected">
+                                        <Binding.Converter>
+                                            <helpers:SelectedItemBackgroudColorConverter 
+                                                SelectedItemColor="OrangeRed"/>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Grid.BackgroundColor>
+                                <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+                                    <Label Text="{Binding CompanyName}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="1" Spacing="5" HorizontalOptions="Center">
+                                    <customControls:ButtonControl
+                                        Text="Bolt" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                        <customControls:ButtonControl.BackgroundColor>
+                                            <Binding Path="BoltName">
+                                                <Binding.Converter>
+                                                    <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </customControls:ButtonControl.BackgroundColor>
+                                    </customControls:ButtonControl>
+                                    <customControls:ButtonControl
+                                        Text="Uber" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                        <customControls:ButtonControl.BackgroundColor>
+                                            <Binding Path="UberName">
+                                                <Binding.Converter>
+                                                    <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </customControls:ButtonControl.BackgroundColor>
+                                    </customControls:ButtonControl>
+                                    <customControls:ButtonControl
+                                        Text="Freenow" FontSize="10"
+                                        BorderColor="Black" TextColor="Black"
+                                        WidthRequest="60" HeightRequest="28">
+                                        <customControls:ButtonControl.BackgroundColor>
+                                            <Binding Path="FreenowName">
+                                                <Binding.Converter>
+                                                    <helpers:EmptyTextToColorConverter
+                                                    EmptyTextColor="LightGray"
+                                                    ValueTextColor="LightGreen"/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </customControls:ButtonControl.BackgroundColor>
+                                    </customControls:ButtonControl>
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</ContentPage>

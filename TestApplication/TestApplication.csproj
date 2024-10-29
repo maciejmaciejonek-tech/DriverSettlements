@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DriverSettlements.ExternalServicesAdapter\DriverSettlements.ExternalServicesAdapter.csproj" />
+    <ProjectReference Include="..\DriverSettlements.WebAPI\DriverSettlements.WebAPI.csproj" />
+  </ItemGroup>
+
+</Project>

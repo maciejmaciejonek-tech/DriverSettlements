@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.DriverWeekPage">
+    <Grid RowDefinitions="Auto,Auto,10,*" RowSpacing="1" ColumnSpacing="1" Margin="2,2,2,2">
+        <Grid x:Name="TitleGrid" ColumnDefinitions="Auto,*,Auto" Padding="5">
+            <customControls:ButtonControl x:Name="PrevButton" Grid.Column="0"
+                    Clicked="PrevButton_Clicked"
+                    Text="&lt;" WidthRequest="50" FontSize="12"/>
+            <HorizontalStackLayout Grid.Column="1" Spacing="0" HorizontalOptions="Center">
+                <Label Text="{x:Static res:ApplicationStrings.Calendar_Week}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=":&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding DriverWeek.YearNumber}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="." VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding DriverWeek.WeekNumber, StringFormat='{0:#00}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;(" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_From}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding DriverWeek.DateFrom, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_To}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding DriverWeek.DateTo, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=")" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+            </HorizontalStackLayout>
+            <customControls:ButtonControl x:Name="NextButton" Grid.Column="2"
+                        Clicked="NextButton_Clicked"
+                        Text="&gt;" WidthRequest="50" FontSize="12"/>
+        </Grid>
+        <Grid Grid.Row="1" RowDefinitions="*,1">
+            <Grid x:Name="BasicRaportView" 
+            Grid.Row="0"  RowSpacing="1" ColumnSpacing="1" ColumnDefinitions="*,*,*,*,*" RowDefinitions="Auto,Auto,Auto,Auto" HorizontalOptions="Fill" BackgroundColor="Black" >
+            <StackLayout Grid.Row="0" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Wartość" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="1" BackgroundColor="White">
+                <Label Text="Bolt" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="2" BackgroundColor="White">
+                <Label Text="Uber" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="3" BackgroundColor="White">
+                <Label Text="FreeNow" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="4" BackgroundColor="White">
+                <Label Text="Razem" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Gotówka"  HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="4" BackgroundColor="White">
+                <Label Text="10.12" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Karta" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="4" BackgroundColor="White">
+                <Label Text="10.12" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Ogółem" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="4" BackgroundColor="White">
+                <Label Text="1123.12" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+        </Grid>
+        <Grid x:Name="MasterWeeklySettlementGrid" Grid.Row="3" ColumnDefinitions="*" RowDefinitions="Auto,*">
+            <Label Grid.Row="0" Text="Rozliczenie tygodnia" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Grid x:Name="WeeklySettlementGrid"  ColumnSpacing="10" Grid.Row="1" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto" HorizontalOptions="Center">
+                <Label Grid.Row="0" Grid.Column="0" Text="Konto spółki:" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="+123,45 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="8% VAT od utargu brutto:"  HorizontalTextAlignment="End"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="-11,22 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Test:"  HorizontalTextAlignment="End"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="0.00 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="RAZEM:"  FontAttributes="Bold" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="1223.00 zł" FontAttributes="Bold" HorizontalTextAlignment="End"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

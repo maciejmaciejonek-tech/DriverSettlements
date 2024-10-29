@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantSettlementItemsPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label x:Name="Title" Grid.Column="0" Text="{x:Static res:ApplicationStrings.ShellContent_ExtrasAndDeducts}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="EditButton"                        
+                        Text="Edytuj" LoadingText="Edytuj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center" 
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="EditButton_Clicked" />
+                <customControls:ButtonControl x:Name="DeleteButton"                        
+                        Text="Usuń" LoadingText="Usuń" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="DeleteButton_Clicked" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="1" ColumnSpacing="1" Margin="2,2,2,2">
+        <Grid x:Name="TitleGrid" ColumnDefinitions="Auto,*,Auto" Padding="5" Grid.Row="0">
+            <customControls:ButtonControl x:Name="PrevButton" Grid.Column="0"
+                    Clicked="PrevButton_Clicked"
+                    Text="&lt;" WidthRequest="50" FontSize="12"/>
+            <HorizontalStackLayout Grid.Column="1" Spacing="0" HorizontalOptions="Center">
+                <Label Text="{x:Static res:ApplicationStrings.Calendar_Week}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=":&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantSettlementItemsWeek.YearNumber}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="." VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantSettlementItemsWeek.WeekNumber, StringFormat='{0:#00}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;(" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_From}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantSettlementItemsWeek.DateFrom, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_To}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantSettlementItemsWeek.DateTo, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=")" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+            </HorizontalStackLayout>
+            <customControls:ButtonControl x:Name="NextButton" Grid.Column="2"
+                        Clicked="NextButton_Clicked"
+                        Text="&gt;" WidthRequest="50" FontSize="12"/>
+        </Grid>
+        <Grid Grid.Row="1" ColumnSpacing="3" ColumnDefinitions="*">
+            <SearchBar Grid.Row="0" Grid.Column="0"
+                x:Name="SearchBar"
+                Placeholder="Wyszukaj kierowcę lub rozliczenie"
+                TextChanged="SearchBar_TextChanged" SearchButtonPressed="SearchBar_SearchButtonPressed">
+            </SearchBar>
+        </Grid>
+        <ScrollView Grid.Row="2">
+            <Grid RowDefinitions="Auto,*">
+                <Grid x:Name="MasterView" 
+                    Grid.Row="0"  RowSpacing="1" ColumnSpacing="1" ColumnDefinitions="30,*,Auto,65" RowDefinitions="auto,auto,auto" HorizontalOptions="Fill" BackgroundColor="Black">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Lp" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="Nazwa kierowcy" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="Rodzaj rozliczenia" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="3" Text="Wartość" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="1"  BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="Tomasz Mordzonek" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="Toyota 450" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="3" Text="12.45" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="2"  BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="Maciej Maciejonek" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="2" Text="Toyota 500" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="3" Text="12.45" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+        <HorizontalStackLayout Grid.Row="3" Spacing="5" HorizontalOptions="Center">
+            <customControls:ButtonControl x:Name="AddExtraOrDeductButton"
+                    Text="Dodaj rozliczenie" LoadingText="Dodaj rozliczenie"
+                    Clicked="AddExtraOrDeductButton_Clicked"
+                    WidthRequest="180" FontSize="12"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

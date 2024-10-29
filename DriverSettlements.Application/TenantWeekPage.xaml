@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:zoft="http://zoft.MauiExtensions/Controls"             
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantWeekPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,3">
+            <Label x:Name="Title" Text="{x:Static res:ApplicationStrings.ShellContent_Weeks}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="FilterButton"                        
+                        Text="Filtruj" LoadingText="Filtruj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center" HorizontalOptions="Center"
+                        BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="FilterButton_Clicked" />
+                <customControls:ButtonControl x:Name="RemoveFilterButton"                        
+                        Text="Usuń filtr" LoadingText="Usuń filtr" 
+                        WidthRequest="70" FontSize="12" VerticalOptions="Center" HorizontalOptions="Center"
+                        BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="RemoveFilterButton_Clicked" IsVisible="false"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="Auto,Auto,Auto,10,Auto,10,*" RowSpacing="1" ColumnSpacing="1" Margin="2,2,2,2">
+        <HorizontalStackLayout Grid.Row="0" x:Name="FilterDriverPanel" IsVisible="false" HorizontalOptions="Center" Padding="3">
+            <zoft:AutoCompleteEntry Grid.Row="0" Grid.Column="2" x:Name="DriverName"
+                Placeholder="Wyszukaj imię i nazwisko kierowcy" TextMemberPath="CompanyName" DisplayMemberPath="CompanyName"
+                WidthRequest="400" MaximumWidthRequest="400" FontSize="14" ItemsSource="{Binding Drivers}"
+                TextChanged="DriverName_TextChanged" SuggestionChosen="DriverName_SuggestionChosen"/>
+        </HorizontalStackLayout>
+        <Grid Grid.Row="1" x:Name="TitleGrid" ColumnDefinitions="Auto,*,Auto" Padding="5">
+            <customControls:ButtonControl x:Name="PrevButton" Grid.Column="0"
+                    Clicked="PrevButton_Clicked"
+                    Text="&lt;" WidthRequest="50" FontSize="12"/>
+            <HorizontalStackLayout Grid.Column="1" Spacing="0" HorizontalOptions="Center">
+                <Label Text="{x:Static res:ApplicationStrings.Calendar_Week}" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text=":&#160;" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{Binding TenantWeek.YearNumber}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="." VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{Binding TenantWeek.WeekNumber, StringFormat='{0:#00}'}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="&#160;(" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_From}" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="&#160;" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{Binding TenantWeek.DateFrom, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="&#160;" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_To}" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="&#160;" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{Binding TenantWeek.DateTo, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text=")" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+            </HorizontalStackLayout>
+            <customControls:ButtonControl x:Name="NextButton" Grid.Column="2"
+                        Clicked="NextButton_Clicked"
+                        Text="&gt;" WidthRequest="50" FontSize="12"/>
+        </Grid>
+        <Grid Grid.Row="2" RowDefinitions="Auto,1">
+            <Grid x:Name="BasicRaportView" 
+            Grid.Row="0"  RowSpacing="1" ColumnSpacing="1" ColumnDefinitions="*,*,*,*" RowDefinitions="Auto,Auto,Auto,Auto" HorizontalOptions="Fill" BackgroundColor="Black" >
+            <StackLayout Grid.Row="0" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Wartość" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="1" BackgroundColor="White">
+                <Label Text="Bolt" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="2" BackgroundColor="White">
+                <Label Text="Uber" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="3" BackgroundColor="White">
+                <Label Text="FreeNow" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Gotówka"  HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Karta" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Ogółem" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="1" BackgroundColor="White">
+                <Label Text="123.34" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="2" BackgroundColor="White">
+                <Label Text="134.00" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="3" BackgroundColor="White">
+                <Label Text="10.12" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+        </Grid>
+        <Grid Grid.Row="4" x:Name="MasterWeeklySettlementGrid" ColumnDefinitions="*" RowDefinitions="Auto,*">
+            <Label Grid.Row="0" Text="Rozliczenie tygodnia" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Grid x:Name="WeeklySettlementGrid"  ColumnSpacing="10" Grid.Row="1" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto" HorizontalOptions="Center">
+                <Label Grid.Row="0" Grid.Column="0" Text="Konto spółki:" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="+123,45 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="8% VAT od utargu brutto:"  HorizontalTextAlignment="End"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="-11,22 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Test:"  HorizontalTextAlignment="End"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="0.00 zł" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="RAZEM:"  FontAttributes="Bold" HorizontalTextAlignment="End"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="1223.00 zł" FontAttributes="Bold" HorizontalTextAlignment="End"/>
+            </Grid>
+        </Grid>
+        <VerticalStackLayout Grid.Row="6" HorizontalOptions="Center" Spacing="5" >
+            <VerticalStackLayout x:Name="BoltActions">
+                <HorizontalStackLayout Spacing="5" >
+                    <customControls:ButtonControl
+                        Text="Pobierz raport Bolt" LoadingText="Pobierz raport Bolt" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="BoltDownload_Clicked"/>
+                    <customControls:ButtonControl
+                        Text="Wgraj raport Bolt" LoadingText="Wgraj raport Bolt" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="BoltUpload_Clicked"/>
+                </HorizontalStackLayout>
+                <Label x:Name="BoltMessage" FontSize="12" VerticalOptions="Fill" IsVisible="false"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="UberActions">
+                <HorizontalStackLayout Spacing="5" >
+                    <customControls:ButtonControl
+                        Text="Pobierz raport Uber" LoadingText="Pobierz raport Uber" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="UberDownload_Clicked"/>
+                    <customControls:ButtonControl x:Name="UberUpload"
+                        Text="Wgraj raport Uber" LoadingText="Wgraj raport Uber" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="UberUpload_Clicked"/>
+                </HorizontalStackLayout>
+                <Label x:Name="UberMessage" FontSize="12" VerticalOptions="Fill" IsVisible="false"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="FreenowActions">
+                <HorizontalStackLayout Spacing="5">
+                    <customControls:ButtonControl
+                        Text="Pobierz raport Freenow" LoadingText="Pobierz raport Freenow" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="FreenowDownload_Clicked"/>
+                    <customControls:ButtonControl
+                        Text="Wgraj raport Freenow" LoadingText="Wgraj raport Freenow" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True"
+                        Clicked="FreenowUpload_Clicked"/>
+                </HorizontalStackLayout>
+                <Label x:Name="FreenowMessage" FontSize="12" VerticalOptions="Fill" IsVisible="false"/>
+            </VerticalStackLayout>
+            <Grid x:Name="ReportsGrid" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="3">
+                <customControls:ButtonControl Grid.Row="0" Grid.Column="1"
+                    Text="Pobierz raport tygodniowy" LoadingText="Pobierz raport tygodniowy" 
+                    WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                    Clicked="DownloadWeeklyReportButton_Clicked"/>
+                <customControls:ButtonControl Grid.Row="1" Grid.Column="1" x:Name="DownloadCustomReportButton"
+                    Text="Pobierz raport za ostatnie" LoadingText="Pobierz raport za ostatnie" 
+                    WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                    Clicked="DownloadCustomReportButton_Clicked"/>
+                <Picker x:Name="WeekPicker" Grid.Row="1" Grid.Column="2" 
+                    ItemsSource="{Binding PickerWeeks}" ItemDisplayBinding="{Binding Name}" FontSize="12" MinimumHeightRequest="20"
+                    SelectedIndexChanged="WeekPicker_SelectedIndexChanged"/>
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Spacing="3" HorizontalOptions="Center">
+                    <Label Text="od" FontSize="12"/>
+                    <Label x:Name="DateFrom" Text="yyyy-MM-dd" FontAttributes="Bold" FontSize="12"/>
+                    <Label Text="do" FontSize="12"/>
+                    <Label x:Name="DateTo" Text="yyyy-MM-dd" FontAttributes="Bold" FontSize="12"/>
+                </HorizontalStackLayout>
+            </Grid>
+            <customControls:ButtonControl x:Name="OpenDriversMappingsButton"
+                    Text="Mapuj kierowców" LoadingText="Mapuj kierowców" 
+                    WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                    Clicked="OpenDriversMappingsButton_Clicked"/>
+            <VerticalStackLayout x:Name="WeekFunctionalities" Spacing="5">
+                <customControls:ButtonControl x:Name="TariffPlanAssignemtsButton"
+                        Text="{x:Static res:ApplicationStrings.Tenant_CarRentals}" LoadingText="{x:Static res:ApplicationStrings.Tenant_CarRentals}" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        Clicked="CarRentalsButton_Clicked"/>
+                <customControls:ButtonControl x:Name="FuelBillsButton"
+                        Text="{x:Static res:ApplicationStrings.ShellContent_FuelBills}" LoadingText="{x:Static res:ApplicationStrings.ShellContent_FuelBills}" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        Clicked="FuelBillsButton_Clicked"/>
+                <customControls:ButtonControl x:Name="SettlementItemsButton"
+                        Text="{x:Static res:ApplicationStrings.ShellContent_ExtrasAndDeducts}" LoadingText="{x:Static res:ApplicationStrings.ShellContent_ExtrasAndDeducts}" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                        Clicked="ExtrasAndDeductsButton_Clicked"/>
+            </VerticalStackLayout>
+            <customControls:ButtonControl x:Name="ConfirmWeekButton"
+                    Text="Zatwierdź tydzień" LoadingText="Zatwierdź tydzień" 
+                    WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                    Clicked="ConfirmWeekButton_Clicked"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

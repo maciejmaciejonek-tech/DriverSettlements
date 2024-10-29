@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             x:Class="DriverSettlements.App.DriverDetailsPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0" Text="Kierowca" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="SaveNavigatorButton"                        
+                        Text="Zapisz" LoadingText="Zapisz" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="SaveButton_Clicked"/>
+                <customControls:ButtonControl x:Name="CancelNavigatorButton"                        
+                        Text="Anuluj" LoadingText="Anuluj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="CancelButton_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid ColumnDefinitions="*" RowDefinitions="*,Auto" Margin="5,5,5,5">
+        <Grid Grid.Row="0" Grid.Column="0" ColumnSpacing="5" RowSpacing="2" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto" HorizontalOptions="Fill">
+            <Label Grid.Row="0" Grid.Column="1" Text="{x:Static res:ApplicationStrings.DriverDetailsPage_DriverName}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="2" x:Name="CompanyName" HorizontalOptions="Start" Text="{Binding Driver.CompanyName}" WidthRequest="250"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="{x:Static res:ApplicationStrings.LegalEntity_EmailAddress}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="1" Grid.Column="2" x:Name="EmailAddress" HorizontalOptions="Start" Text="{Binding Driver.EmailAddress}" WidthRequest="250"/>
+            <Label Grid.Row="2" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Tenant_BoltName}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="2" Grid.Column="2" x:Name="BoltName" HorizontalOptions="Start" Text="{Binding Driver.BoltName}" WidthRequest="250"/>
+            <Label Grid.Row="3" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Tenant_UberName}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="3" Grid.Column="2" x:Name="UberName" HorizontalOptions="Start" Text="{Binding Driver.UberName}" WidthRequest="250"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Tenant_FreenowName}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="4" Grid.Column="2" x:Name="FreenowName" HorizontalOptions="Start" Text="{Binding Driver.FreenowName}" WidthRequest="250"/>
+            <Label Grid.Row="5" Grid.Column="1" Text="Początkowy depozyt" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="5" Grid.Column="2" x:Name="Deposit" HorizontalOptions="Start" Text="{Binding Driver.Deposit, StringFormat='{0:#0.00}'}" WidthRequest="250" Focused="Deposit_Focused"/>
+            <Label Grid.Row="6" Grid.Column="1" Text="Depozyt w sumie" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Row="6" Grid.Column="2" x:Name="DepositSummary" Text="" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Label Grid.Row="7" Grid.Column="1" Text="{x:Static res:ApplicationStrings.LegalEntity_InvitationKey}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="7" Grid.Column="2" x:Name="InvitationKey" HorizontalOptions="Start" Text="{Binding Driver.InvitationKey}" IsReadOnly="True" WidthRequest="250"/>
+            <Label Grid.Row="8" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Driver_ApplicationFee}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="8" Grid.Column="2" IsToggled="{Binding Driver.ApplicationFeeChargeDriver}" HorizontalOptions="Start"/>
+            <Label Grid.Row="9" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Actions_Confirmed}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="9" Grid.Column="2" IsToggled="{Binding Driver.Confirmed}" HorizontalOptions="Start"/>
+            <Label Grid.Row="10" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Actions_Blocked}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="10" Grid.Column="2" IsToggled="{Binding Driver.Blocked}" HorizontalOptions="Start"/>
+            <Label Grid.Row="11" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Actions_Deleted}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="11" Grid.Column="2" IsToggled="{Binding Driver.Deleted}" HorizontalOptions="Start"/>
+        </Grid>
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" Spacing="5">
+            <customControls:ButtonControl x:Name="SendInvitationKeyButton" 
+                IsVisible="false"                                          
+                Text="{x:Static res:ApplicationStrings.InvitationKey_SendInvitationKey}"
+                LoadingText="{x:Static res:ApplicationStrings.InvitationKey_SendInvitationKey}"
+                Clicked="SendInvitationKeyButton_Clicked"
+                WidthRequest="250" HeightRequest="35"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

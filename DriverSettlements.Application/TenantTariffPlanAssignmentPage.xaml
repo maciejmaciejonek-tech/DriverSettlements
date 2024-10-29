@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"    
+             xmlns:zoft="http://zoft.MauiExtensions/Controls"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantTariffPlanAssignmentPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,3">
+            <Label x:Name="Title" Text="Plan taryfowy" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout x:Name="Navigator" Spacing="5" Grid.Column="1" VerticalOptions="Center">
+                <customControls:ButtonControl x:Name="SaveButton"
+                        Text="Zapisz" LoadingText="Zapisz" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="SaveButton_Clicked"/>
+                <customControls:ButtonControl x:Name="CancelButton" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        Text="Anuluj" LoadingText="Anuluj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="CancelButton_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="10,*">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="5">
+            <Label Grid.Row="0" Grid.Column="1" Text="Nazwa kierowcy:" FontSize="14" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <zoft:AutoCompleteEntry Grid.Row="0" Grid.Column="2" x:Name="DriverName"
+                Placeholder="Wyszukaj imię i nazwisko kierowcy" TextMemberPath="CompanyName" DisplayMemberPath="CompanyName"
+                WidthRequest="250" MaximumWidthRequest="250" FontSize="14" ItemsSource="{Binding Drivers}"
+                TextChanged="Drivers_TextChanged" SuggestionChosen="Drivers_SuggestionChosen" HorizontalOptions="Start"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="Plan taryfowy:" FontSize="14" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <zoft:AutoCompleteEntry Grid.Row="1" Grid.Column="2" x:Name="TariffPlanName"
+                Placeholder="Wyszukaj nazwę planu taryfowego" TextMemberPath="Name" DisplayMemberPath="Name"
+                WidthRequest="250" MaximumWidthRequest="250" FontSize="14" ItemsSource="{Binding TariffPlans}"
+                TextChanged="TariffPlans_TextChanged" SuggestionChosen="TariffPlans_SuggestionChosen" HorizontalOptions="Start"/>
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Spacing="1" HorizontalOptions="Center">
+                <Label Text="Pn" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Monday}" VerticalOptions="Center"/>
+                <Label Text="Wt" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Tuesday}" VerticalOptions="Center"/>
+                <Label Text="Śr" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Wednesday}" VerticalOptions="Center"/>
+                <Label Text="Cz" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Thursday}" VerticalOptions="Center"/>
+                <Label Text="Pt" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Friday}" VerticalOptions="Center"/>
+                <Label Text="So" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Saturday}" VerticalOptions="Center"/>
+                <Label Text="Ni" FontSize="12" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding TariffPlanAssignment.Sunday}" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Label Grid.Row="3" Grid.Column="1" Text="Tryb powielania:" FontSize="14" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Grid Grid.Row="3" RowSpacing="1" Grid.Column="2" ColumnDefinitions="*" RowDefinitions="38,38,38">
+                <StackLayout Grid.Row="0" BackgroundColor="LightGray">
+                    <RadioButton x:Name="PeriodicType0" Value="0" Content="Brak powielania" FontSize="14" GroupName="PeriodicType" />
+                </StackLayout>
+                <StackLayout Grid.Row="1" BackgroundColor="LightGreen">
+                    <RadioButton x:Name="PeriodicType1" Value="1" Content="Powielanie bez szczegółów" FontSize="14" GroupName="PeriodicType"/>
+                </StackLayout>
+                <StackLayout Grid.Row="2" BackgroundColor="LightBlue">
+                    <RadioButton x:Name="PeriodicType2" Value="2" Content="Powielanie ze szczegółami" FontSize="14" GroupName="PeriodicType"/>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantSettlementTypePage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,3">
+            <Label x:Name="Title" Text="Rodzaj rozliczenia" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout x:Name="Navigator" Grid.Column="1" Spacing="5" Padding="5" HorizontalOptions="End" >
+                <customControls:ButtonControl x:Name="SaveButton"
+                        Text="Zapisz" LoadingText="Zapisz" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="SaveButton_Clicked"/>
+                <customControls:ButtonControl x:Name="CancelButton" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        Text="Anuluj" LoadingText="Anuluj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="CancelButton_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="10,*">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="5">
+            <Label Grid.Row="0" Grid.Column="1" Text="Nazwa:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="2" x:Name="Name" Text="{Binding SettlementType.TypeName}" FontSize="12" WidthRequest="200"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="Typ:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="1" Grid.Column="2" x:Name="Type" FontSize="12" WidthRequest="200"/>
+            <Label Grid.Row="2" Grid.Column="1" Text="Współczynnik:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="2" Grid.Column="2" x:Name="Factor" Text="{Binding SettlementType.Factor}" FontSize="12" WidthRequest="200" Keyboard="Numeric"/>
+            <Label Grid.Row="3" Grid.Column="1" Text="Obciążenie:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="3" Grid.Column="2" x:Name="Debit" IsToggled="{Binding SettlementType.Debit}"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="W raporcie:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="4" Grid.Column="2" x:Name="IncludeInReport" IsToggled="{Binding SettlementType.IncludeInReport}"/>
+            <Label Grid.Row="5" Grid.Column="1" Text="Aktywny:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="5" Grid.Column="2" x:Name="Enabled" IsToggled="{Binding SettlementType.Enabled}"/>
+        </Grid>
+    </Grid>
+</ContentPage>

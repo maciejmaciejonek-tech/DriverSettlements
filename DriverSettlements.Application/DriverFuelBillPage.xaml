@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.DriverFuelBillPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label x:Name="Title" Text="Rachunek za paliwo" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="SaveButton"
+                        Text="Zapisz" LoadingText="Zapisz" 
+                        WidthRequest="70" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="SaveFuelBill_Clicked" />
+                <customControls:ButtonControl
+                        Text="Anuluj" LoadingText="Anuluj" 
+                        WidthRequest="70" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="Cancel_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto,*,Auto,5" Padding="5" RowSpacing="5">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,10,2*,*" RowDefinitions="Auto,Auto" HorizontalOptions="Center" ColumnSpacing="5">
+            <Label Grid.Row="0" Grid.Column="0" Text="Wartość:" FontSize="12" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="1" x:Name="Price" WidthRequest="65" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center" Keyboard="Numeric"/>
+            <Label Grid.Row="1" Grid.Column="0" Text="Data:" FontSize="12" HorizontalOptions="End" VerticalOptions="Center"/>
+            <DatePicker Grid.Row="1" Grid.Column="1" x:Name="DatePicker" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="3" Text="Numer rachunku:" FontSize="12" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="4" x:Name="ReferenceNumber" WidthRequest="150" FontSize="12" HorizontalOptions="Start" VerticalOptions="Center" Keyboard="Plain"/>
+        </Grid>
+        <Border Grid.Row="1" Stroke="Black">
+            <Image x:Name="SelectedImage" Grid.Row="1" />
+        </Border>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Grid.Row="2">
+            <customControls:ButtonControl x:Name="CapturePhoto"
+                        Text="Zrób zdjęcie" LoadingText="Zrób zdjęcie" 
+                        WidthRequest="150" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="CapturePhoto_Clicked"/>
+            <customControls:ButtonControl x:Name="PickPhoto"
+                        Text="Pobierz zdjęcie" LoadingText="Pobierz zdjęcie" 
+                        WidthRequest="150" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="PickPhoto_Clicked"/>
+            <customControls:ButtonControl x:Name="RequestFuelBill"
+                        Text="Rejestruj ponownie" LoadingText="Rejestruj ponownie" 
+                        WidthRequest="150" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="RequestFuelBill_Clicked"/>
+            <customControls:ButtonControl x:Name="RemoveFuelBill"
+                        Text="Usuń rachunek" LoadingText="Usuń rachnek" 
+                        WidthRequest="150" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="RemoveFuelBill_Clicked"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantTariffPlanPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,3">
+            <Label x:Name="Title" Text="Plan taryfowy" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout x:Name="Navigator" Spacing="5" Grid.Column="1" VerticalOptions="Center">
+                <customControls:ButtonControl x:Name="SaveButton"
+                        Text="Zapisz" LoadingText="Zapisz" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="SaveButton_Clicked"/>
+                <customControls:ButtonControl x:Name="CancelButton" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
+                        Text="Anuluj" LoadingText="Anuluj" 
+                        WidthRequest="60" FontSize="12" VerticalOptions="Center"
+                        IsEnabled="True" Clicked="CancelButton_Clicked"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="10,*">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="5">
+            <Label Grid.Row="0" Grid.Column="1" Text="Nazwa planu:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="2" x:Name="Name" Text="{Binding TariffPlan.Name}" FontSize="12" WidthRequest="150"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="Stawka najmu:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="1" Grid.Column="2" x:Name="WeeklyRate" Text="{Binding TariffPlan.WeeklyRate, StringFormat='{0:#0.00}'}" FontSize="12" WidthRequest="150" Keyboard="Numeric" Focused="WeeklyRate_Focused"/>
+            <Label Grid.Row="2" Grid.Column="1" Text="Aktywny:" FontSize="12" HorizontalTextAlignment="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="2" Grid.Column="2" IsToggled="{Binding TariffPlan.Enabled}"/>
+        </Grid>
+    </Grid>
+</ContentPage>

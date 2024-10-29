@@ -1,0 +1,206 @@
+function getElementsByText(str, tag = 'div') {
+  return Array.prototype.slice.call(document.getElementsByTagName(tag)).filter(el => el.textContent.trim() === str.trim());
+}
+
+function openSettings()
+{
+  var elements = document.querySelectorAll('[aria-label="Open settings"]');
+  if (elements.length<1)
+    return false;
+  elements[0].click();
+  return true;
+}
+
+function setSettings()
+{
+  var elements = getElementsByText('Columns to show','h3');
+  if (elements.length<1)
+    return false;
+  var parameter = elements[0].nextSibling
+  while (parameter!=null)
+  {
+    if (parameter.firstChild!=null && parameter.firstChild.firstChild!=null && parameter.firstChild.firstChild.firstChild!=null && !parameter.firstChild.firstChild.firstChild.checked)
+      parameter.firstChild.click()
+    parameter = parameter.nextSibling
+  
+  }
+  return true;
+}
+
+function saveSettings()
+{
+  var elements = getElementsByText('Apply','button');
+  if (elements.length<1)
+    return false;
+  elements[0].click();
+}
+
+function executeSettingsAction()
+{
+  setTimeout(function(){
+    openSettings();
+  }, 1000);
+  setTimeout(function(){
+    setSettings();
+  }, 1000);
+  setTimeout(function(){
+    saveSettings();
+  }, 1000);
+}
+
+function setCustomTimePeriod()
+{
+  var elements = getElementsByText('Today','div');
+  if (elements==null || elements.length<1)
+    return false;
+  elements[0].click();
+  var elements = getElementsByText('Custom','div');
+  if (elements==null || elements.length<1)
+    return false;
+  elements[0].click();
+  return true;
+}
+
+function clickDatesRange()
+{
+  var elements = document.querySelectorAll('[placeholder="MMM d - MMM d"]')
+  if (elements==null || elements.length<1)
+    return null;
+  return elements[0].click();
+}
+
+function getDatesRange()
+{
+  var elements = document.querySelectorAll('[placeholder="MMM d - MMM d"]')
+  if (elements==null || elements.length<1)
+    return null;
+  return elements[0].value;
+}
+
+function getMonth()
+{
+  var elements = document.querySelectorAll('[class="react-datepicker__month"]');
+  if (elements==null || elements.length<1)
+    return null;
+  return elements[0].getAttribute('aria-label').split('  ')[1];
+}
+
+function getPreviousMonth()
+{
+  var elements = document.querySelectorAll('[aria-label="Previous month"]');
+  if (elements==null || elements.length<1)
+    return false;
+  elements[0].click();  
+  return true;
+}
+
+function getNextMonth()
+{
+  var elements = document.querySelectorAll('[aria-label="Next month"]');
+  if (elements==null || elements.length<1)
+    return false;
+  elements[0].click();  
+  return true;
+}
+
+function setDay(dayNumber)
+{
+  var elements = getElementsByText(dayNumber.toString(),'div');
+  if (elements!=null && elements.length>0)
+  {
+    for(const element of elements)
+    {
+      if (element.className.indexOf('react-datepicker__day')<0)
+        continue;
+      if (element.className.indexOf('outside-month')>-1)
+        continue;
+      if (element.className.indexOf('internal')>-1)
+        continue;
+      element.click();
+      return true;
+    }
+  }
+  return false;
+}
+
+function executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, actionNumber)
+{
+/*
+0 - clickDateRanges
+1 - setFirstDate
+2 - setSecondDate
+3 - download
+*/
+    switch(actionNumber)
+    {
+        case 0:
+            clickDatesRange();
+            setTimeout(function(){
+                executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, 1);
+            }, 1000);
+            break;
+        case 1:
+            if (setDate(firstYear, firstMonth, firstDay))
+            {
+                setTimeout(function(){
+                    executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, 2);
+                }, 1000);
+            }
+            else
+            {
+                setTimeout(function(){
+                    executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, 1);
+                }, 1000);
+            }
+            break;
+        case 2:
+            if (setDate(secondYear, secondMonth, secondDay))
+            {
+                setTimeout(function(){
+                    executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, 3);
+                }, 1000);
+            }
+            else
+            {
+                setTimeout(function(){
+                    executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, 2);
+                }, 1000);
+            }
+            break;
+        case 3:
+            downloadReport();
+            break;
+    };
+}
+
+function setDate(year, month, day)
+{
+    var strMonth = year + '-' +  (month<10?'0':'') + month;
+    var currentStrMonth = getMonth();
+    if (strMonth<currentStrMonth)
+    {
+        getPreviousMonth();
+        return false;
+    }
+    else if (strMonth>currentStrMonth)
+    {
+        getNextMonth();
+        return false;
+    }
+    else
+    {
+        setDay(day);
+        return true;
+    }
+}
+
+
+function downloadReport()
+{
+  var elements = getElementsByText('Download','button');
+  if (elements==null || elements.length<1)
+    return false;
+  elements[0].click();
+}
+
+executeAction({firstYear},{firstMonth},{firstDay},{secondYear},{secondMonth},{secondDay},0);

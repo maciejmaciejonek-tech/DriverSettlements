@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DriverSettlements.ExternalServicesAdapter": {
+      "commandName": "Project",
+      "commandLineArgs": "\"1\" \"57616\" \"evelcars@gmail.com\" \"Evelbolt123!\" \"2024-06-24\" \"2024-06-30\" \"C:\\Temp\\bolt.csv\""
+    }
+  }
+}

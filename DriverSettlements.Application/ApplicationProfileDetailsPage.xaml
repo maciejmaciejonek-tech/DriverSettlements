@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             x:Class="DriverSettlements.App.ApplicationProfileDetailsPage">
+    <Grid ColumnDefinitions="*" RowDefinitions="*,Auto" Margin="5,5,5,5">
+        <Grid Grid.Row="0" Grid.Column="0" ColumnSpacing="5" RowSpacing="2" ColumnDefinitions="*,Auto,Auto,*" RowDefinitions="auto,auto" HorizontalOptions="Fill">
+            <Label Grid.Row="0" Grid.Column="1" Text="{x:Static res:ApplicationStrings.ApplicationProfiles_ProfileName}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="0" Grid.Column="2" x:Name="ProfileName" HorizontalOptions="Start" VerticalOptions="Center" Text="{Binding Profile.Name}" WidthRequest="250"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="{x:Static res:ApplicationStrings.Actions_Default}" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Switch Grid.Row="1" Grid.Column="2" IsToggled="{Binding Profile.Default}" HorizontalOptions="Start" VerticalOptions="Center"/>
+        </Grid>
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" Spacing="5">
+            <customControls:ButtonControl x:Name="SaveButton" 
+                IsVisible="false"                                          
+                Text="{x:Static res:ApplicationStrings.Actions_Save}"
+                LoadingText="{x:Static res:ApplicationStrings.Actions_Save}"
+                Clicked="SaveButton_Clicked"
+                WidthRequest="150" HeightRequest="35"/>
+            <customControls:ButtonControl x:Name="CancelButton" 
+                IsVisible="false"                                          
+                Text="{x:Static res:ApplicationStrings.Actions_Cancel}"
+                LoadingText="{x:Static res:ApplicationStrings.Actions_Cancel}"
+                Clicked="CancelButton_Clicked"
+                WidthRequest="150" HeightRequest="35"/>
+            <customControls:ButtonControl x:Name="SwitchToProfile" 
+                IsVisible="false"                                          
+                Text="{x:Static res:ApplicationStrings.ApplicationProfiles_SwitchToProfile}"
+                LoadingText="{x:Static res:ApplicationStrings.ApplicationProfiles_SwitchToProfile}"
+                Clicked="SwitchToProfile_Clicked"
+                WidthRequest="250" HeightRequest="35"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

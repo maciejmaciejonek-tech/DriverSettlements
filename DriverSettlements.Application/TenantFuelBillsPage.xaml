@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantFuelBillsPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto,3">
+            <Label x:Name="Title" Grid.Column="0" Text="{x:Static res:ApplicationStrings.ShellContent_FuelBills}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="VerifyFuelBillButton"                        
+                        Text="Weryfikuj" LoadingText="Weryfikuj" 
+                        WidthRequest="75" FontSize="12" VerticalOptions="Center"
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="VerifyFuelBill_Clicked" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*" RowSpacing="1" ColumnSpacing="1" Margin="2,2,2,2">
+        <Grid x:Name="TitleGrid" ColumnDefinitions="Auto,*,Auto" Padding="5" Grid.Row="0">
+            <customControls:ButtonControl x:Name="PrevButton" Grid.Column="0"
+                    Clicked="PrevButton_Clicked"
+                    Text="&lt;" WidthRequest="50" FontSize="12"/>
+            <HorizontalStackLayout Grid.Column="1" Spacing="0" HorizontalOptions="Center">
+                <Label Text="{x:Static res:ApplicationStrings.Calendar_Week}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=":&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantFuelBillsWeek.YearNumber}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="." VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantFuelBillsWeek.WeekNumber, StringFormat='{0:#00}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;(" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_From}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantFuelBillsWeek.DateFrom, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" FontSize="12" TextColor="Black"/>
+                <Label Text="{x:Static res:ApplicationStrings.Actions_To}" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="&#160;" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text="{Binding TenantFuelBillsWeek.DateTo, StringFormat='{0:yyyy-MM-dd}'}" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+                <Label Text=")" VerticalOptions="Center" TextColor="Black" FontSize="12"/>
+            </HorizontalStackLayout>
+            <customControls:ButtonControl x:Name="NextButton" Grid.Column="2"
+                        Clicked="NextButton_Clicked"
+                        Text="&gt;" WidthRequest="50" FontSize="12"/>
+        </Grid>
+        <Grid Grid.Row="1" ColumnSpacing="3" ColumnDefinitions="*,Auto,Auto,3">
+            <SearchBar Grid.Row="0" Grid.Column="0"
+                x:Name="SearchBar"
+                Placeholder="{x:Static res:ApplicationStrings.DriversPage_SearchDriver}"
+                TextChanged="SearchBar_TextChanged" SearchButtonPressed="SearchBar_SearchButtonPressed">
+            </SearchBar>
+            <Label Grid.Row="0" Grid.Column="1" Text="Rachunki:" VerticalOptions="Center" FontSize="12"/>
+            <customControls:ButtonControl Grid.Row="0" Grid.Column="2" x:Name="FilterAllFuelBillsButton"                        
+                        Text="wszystkie" LoadingText="wszystkie" 
+                        WidthRequest="80" FontSize="12" VerticalOptions="Center"
+                        Clicked="FilterAllFuelBills_Clicked" />
+            <customControls:ButtonControl Grid.Row="0" Grid.Column="2" x:Name="FilterRequestedFuelBillsButton"                        
+                        Text="oczekujące" LoadingText="oczekujące" 
+                        WidthRequest="80" FontSize="12" VerticalOptions="Center"                        
+                        Clicked="FilterRequestedFuelBills_Clicked" />
+        </Grid>
+        <ScrollView Grid.Row="2">
+            <Grid RowDefinitions="Auto,*">
+                <Grid x:Name="FuelBillsMasterView" 
+            Grid.Row="0"  RowSpacing="1" ColumnSpacing="1" ColumnDefinitions="*,28,28,28" RowDefinitions="auto,auto,auto,auto" HorizontalOptions="Fill" BackgroundColor="Black">
+            <StackLayout Grid.Row="0" Grid.Column="0" BackgroundColor="White">
+                <Label Text="Lp" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="1" BackgroundColor="White">
+                <Label Text="Data" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="2" BackgroundColor="White">
+                <Label Text="Numer rachunku" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="3" BackgroundColor="White">
+                <Label Text="Wartość" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="4" BackgroundColor="White">
+                <Label Text="Status" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="White">
+                <Label Text="1"  HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="White">
+                <Label Text="2023-10-12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="White">
+                <Label Text="1233-3232323-3232-323" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="3" BackgroundColor="White">
+                <Label Text="357.43" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="4" BackgroundColor="White">
+                <Label Text="Zaakceptowany" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="White">
+                <Label Text="5" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="1" BackgroundColor="White">
+                <Label Text="2023-10-12" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="2" BackgroundColor="White">
+                <Label Text="1233-3232323-3232-323" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="3" BackgroundColor="White">
+                <Label Text="453,43" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="4" BackgroundColor="White">
+                <Label Text="Odrzucony" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="0" BackgroundColor="White">
+                <Label Text="10" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="1" BackgroundColor="White">
+                <Label Text="2023-12-13" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="2" BackgroundColor="White">
+                <Label Text="1233-3232323-3232-323" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="3" BackgroundColor="White">
+                <Label Text="46,54" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" Grid.Column="4" BackgroundColor="White">
+                <Label Text="Oczekujący" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

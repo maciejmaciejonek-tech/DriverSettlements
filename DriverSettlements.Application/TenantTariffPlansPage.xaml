@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
+             xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
+             xmlns:helpers="clr-namespace:DriverSettlements.App.Helpers"
+             x:Class="DriverSettlements.App.TenantTariffPlansPage">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto">
+            <Label x:Name="Title" Grid.Column="0" Text="{x:Static res:ApplicationStrings.Tenant_TariffPlans}" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
+                <customControls:ButtonControl x:Name="EditTariffPlanButton"                        
+                        Text="Edytuj" LoadingText="Edytuj" 
+                        WidthRequest="80" FontSize="12" VerticalOptions="Center" HorizontalOptions="Center"
+                        IsVisible="False" BackgroundColor="OrangeRed" BorderColor="Black" TextColor="Black"
+                        Clicked="EditTariffPlan_Clicked" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*" RowSpacing="5" ColumnSpacing="1" Margin="2,2,2,2">
+        <Grid Grid.Row="0" ColumnSpacing="3" ColumnDefinitions="*,Auto,Auto,2">
+            <SearchBar Grid.Row="0" Grid.Column="0"
+                x:Name="SearchBar"
+                Placeholder="Wyszukaj plan taryfowy"
+                TextChanged="SearchBar_TextChanged" SearchButtonPressed="SearchBar_SearchButtonPressed">
+            </SearchBar>
+            <Label Grid.Row="0" Grid.Column="1" Text="Plany:" VerticalOptions="Center" FontSize="12"/>
+            <customControls:ButtonControl Grid.Row="0" Grid.Column="2" x:Name="FilterAllTariffPlansButton"                        
+                        Text="wszystkie" LoadingText="wszystkie" 
+                        WidthRequest="80" FontSize="12" VerticalOptions="Center"
+                        Clicked="FilterAllTariffPlans_Clicked" />
+            <customControls:ButtonControl Grid.Row="0" Grid.Column="2" x:Name="FilterActiveTariffPlansButton"                        
+                        Text="aktywne" LoadingText="aktywne" 
+                        WidthRequest="80" FontSize="12" VerticalOptions="Center"                        
+                        Clicked="FilterActiveTariffPlans_Clicked" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <Grid RowDefinitions="Auto,*">
+                <Grid x:Name="MasterView" 
+                    Grid.Row="0"  RowSpacing="1" ColumnSpacing="1" ColumnDefinitions="40,*,110,90" RowDefinitions="auto,auto,auto" HorizontalOptions="Fill" BackgroundColor="Black">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Lp" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="Nazwa planu" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="Stawka najmu" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Grid.Column="3" Text="Status" FontAttributes="Bold" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="1"  BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="Toyota 450" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="2" Text="450,00" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Grid.Column="3" Text="Aktywny" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="2"  BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="Toyota 550" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="2" Text="550,00" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="3" Text="Aktywny" BackgroundColor="White" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+        <customControls:ButtonControl Grid.Row="2"                        
+                        Text="Dodaj plan taryfowy" LoadingText="Dodaj plan taryfowy" 
+                        WidthRequest="180" FontSize="12" VerticalOptions="Center"                        
+                        Clicked="AddTariffPlan_Clicked" />
+    </Grid>
+</ContentPage>

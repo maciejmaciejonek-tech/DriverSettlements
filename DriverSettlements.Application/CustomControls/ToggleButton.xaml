@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        BackgroundColor="{x:StaticResource Primary}"
+        CornerRadius="8" Padding="8"
+        x:Name="BtnControl"
+        x:Class="DriverSettlements.App.CustomControls.ToggleButton" HorizontalOptions="Center">
+    <Grid ColumnDefinitions="*">
+        <Label x:Name="lblButtonText"             
+            Grid.Column="2"
+            Text="{Binding Source={x:Reference BtnControl}, Path=Text}" 
+            TextColor="White"
+            FontSize="12"
+            VerticalTextAlignment="Center" 
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"/>
+    </Grid>
+    <!--Frame.Triggers>
+        <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference BtnControl}, Path=Toggled}" Value="True">
+            <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+        <DataTrigger TargetType="Frame" Binding="{Binding Source={x:Reference BtnControl}, Path=Toggled}" Value="False">
+            <Setter Property="IsEnabled" Value="True"/>
+        </DataTrigger>
+    </Frame.Triggers-->
+    <Frame.GestureRecognizers>
+        <TapGestureRecognizer 
+            Command="{Binding Source={x:Reference BtnControl},Path=Command}"
+            Tapped="TapGestureRecognizer_Tapped"/>
+    </Frame.GestureRecognizers>
+</Frame>
