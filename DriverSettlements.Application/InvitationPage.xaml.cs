@@ -41,7 +41,7 @@ namespace DriverSettlements.App
             }
             catch(Exception ex)
             {
-                await DisplayAlert(ApplicationStrings.InvitationPage_ApplicationRegistering, _applicationController.ExceptionMessage, "OK");
+                await DisplayAlert(ApplicationStrings.InvitationPage_ApplicationRegistering, ex.Message, "OK");
             }
             finally
             {

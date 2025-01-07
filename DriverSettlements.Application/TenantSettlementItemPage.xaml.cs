@@ -86,6 +86,12 @@ namespace DriverSettlements.App
                 SettlementItem.Driver = null;
                 var settlementType = SettlementItem.SettlementType;
                 SettlementItem.SettlementType = null;
+                if (!SettlementItem.Periodic)
+                    SettlementItem.NumberOfTimes = null;
+                if (SettlementItem.NumberOfTimes.HasValue && SettlementItem.NumberOfTimes < 1)
+                    SettlementItem.NumberOfTimes = null;
+                if (string.IsNullOrWhiteSpace(NumberOfTimes.Text))
+                    SettlementItem.NumberOfTimes = null;
                 if (_mode == Mode.AddSettlementItem)
                     await _applicationController.TenantController.SettlementItemsController.AddObject(SettlementItem);
                 else if (_mode == Mode.EditSettlementItem)
@@ -204,6 +210,15 @@ namespace DriverSettlements.App
             {
                 WeeklyRate.CursorPosition = 0;
                 WeeklyRate.SelectionLength = WeeklyRate.Text == null ? 0 : WeeklyRate.Text.Length;
+            });
+        }
+
+        private void NumberOfTimes_Focused(object sender, FocusEventArgs e)
+        {
+            Dispatcher.Dispatch(() =>
+            {
+                NumberOfTimes.CursorPosition = 0;
+                NumberOfTimes.SelectionLength = NumberOfTimes.Text == null ? 0 : NumberOfTimes.Text.Length;
             });
         }
     }

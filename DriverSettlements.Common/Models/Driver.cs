@@ -29,6 +29,8 @@ namespace DriverSettlements.Common.Models
         public bool ApplicationFeeChargeDriver { get; set; } = true;
         [Column(Order = 13)]
         public double Deposit { get; set; } = 0.0;
+        [Column(Order = 14)]
+        public double? PartnershipFee { get; set; } = null;
 
         [ForeignKey("DriverId")]
         public ICollection<FuelBill>? FuelBills { get; set; }

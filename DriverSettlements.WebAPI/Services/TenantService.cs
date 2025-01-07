@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using System;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
@@ -106,6 +107,10 @@ namespace DriverSettlements.WebAPI.Services
                 driver.UberName = request.Driver.UberName;
                 driver.FreenowName = request.Driver.FreenowName;
                 driver.Deposit = request.Driver.Deposit;
+                if (request.Driver.PartnershipFee.HasValue)
+                    driver.PartnershipFee = request.Driver.PartnershipFee;
+                else
+                    driver.PartnershipFee = null;
                 _dbContext.SaveChanges();
                 return new UpdateDriverResponse()
                 {
@@ -434,136 +439,160 @@ namespace DriverSettlements.WebAPI.Services
                 var weekReports = _dbContext.ExternalReports.Where(er => er.TenantId.Equals(tenant.Id)
                     && er.YearNumber.Equals(request.YearNumber) && er.WeekNumber.Equals(request.WeekNumber)).ToList();
                 var defReportItem = ReportTemplatesHelper.GetReportTemplate(_dbContext, "Basic report", DateTime.Now);
+
+                if (defReportItem == null || defReportItem.DefReportColumns == null)
+                    throw new Exception("Appeared problem with basic report definition");
+                List<string> columnNames = defReportItem.DefReportColumns.Skip(1).Select(c => c.ColumnName).ToList();
+
                 var externalReports = new List<ExternalReportMetadata>();
-                List<string>? columnNames = null;
                 var reportsValues = new Dictionary<ExternalReportType, List<double>>();
                 var weeklySettlementComponents = new Dictionary<string, double>();
-                if (defReportItem != null && defReportItem.DefReportColumns != null)
+
+                var valuesPerDriver = new Dictionary<Driver, List<double>>();
+
+                if (weekReports != null && weekReports.Count > 0)
                 {
-                    columnNames = defReportItem.DefReportColumns.Skip(1).Select(c => c.ColumnName).ToList();
-                    if (weekReports != null && weekReports.Count > 0)
+                    var reportDriversDict = new Dictionary<ExternalReportType, List<string>>();
+                    foreach (var externalReport in weekReports)
                     {
-                        var reportDriversDict = new Dictionary<ExternalReportType, List<string>>();
-                        foreach (var externalReport in weekReports)
+                        defReportItem = ReportTemplatesHelper.GetReportTemplate(_dbContext, "Basic report", externalReport.DownloadDate);
+                        if (externalReport.Status == ExternalReportStatus.Generated)
                         {
-                            defReportItem = ReportTemplatesHelper.GetReportTemplate(_dbContext, "Basic report", externalReport.DownloadDate);
-                            if (externalReport.Status == ExternalReportStatus.Generated)
+                            var reportBody = ExternalReportBody.Deserialize(externalReport.ReportBody);
+                            if (reportBody == null)
+                                throw new Exception($"Invalid report body in {externalReport.ReportType} report for week {request.YearNumber}.{request.WeekNumber}");
+                            ReportTemplatesHelper.SetReportBodyGlobalTemplates(_dbContext, reportBody, externalReport.ReportType, externalReport.DownloadDate);
+                            ReportTemplatesHelper.SetReportBodyBasicReportTemplate(_dbContext, reportBody, externalReport.ReportType, externalReport.DownloadDate);
+                            var reportDrivers = reportBody.GetDrivers()?.Select(d => d.ToLower());
+                            var databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, externalReport.ReportType);
+                            if (reportDrivers != null)
                             {
-                                var reportBody = ExternalReportBody.Deserialize(externalReport.ReportBody);
-                                if (reportBody == null)
-                                    throw new Exception($"Invalid report body in {externalReport.ReportType} report for week {request.YearNumber}.{request.WeekNumber}");
-                                ReportTemplatesHelper.SetReportBodyGlobalTemplates(_dbContext, reportBody, externalReport.ReportType, externalReport.DownloadDate);
-                                ReportTemplatesHelper.SetReportBodyBasicReportTemplate(_dbContext, reportBody, externalReport.ReportType, externalReport.DownloadDate);
-                                var reportDrivers = reportBody.GetDrivers()?.Select(d => d.ToLower());
-                                if (reportDrivers != null)
+                                reportDriversDict.Add(externalReport.ReportType, reportDrivers.ToList());
+                                //add not confirmed drivers
+                                var unmatchedDrivers = reportDrivers.Where(rd => !databaseDrivers.ContainsKey(rd)).ToList();
+                                if (unmatchedDrivers.Count>0)
                                 {
-                                    reportDriversDict.Add(externalReport.ReportType, reportDrivers.ToList());
-                                    var databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, externalReport.ReportType);
-                                    //add not confirmed drivers
-                                    var unmatchedDrivers = reportDrivers.Where(rd => !databaseDrivers.ContainsKey(rd)).ToList();
-                                    if (unmatchedDrivers.Count>0)
+                                    databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, ExternalReportType.Unknown);
+                                    var automaticallyMatchedDrivers = databaseDrivers.Where(d => unmatchedDrivers.Contains(d.Key.ToLower())).ToDictionary(d=>d.Key,d=>d.Value);
+                                    if (automaticallyMatchedDrivers.Count>0)
                                     {
-                                        databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, ExternalReportType.Unknown);
-                                        var automaticallyMatchedDrivers = databaseDrivers.Where(d => unmatchedDrivers.Contains(d.Key.ToLower())).ToDictionary(d=>d.Key,d=>d.Value);
-                                        if (automaticallyMatchedDrivers.Count>0)
+                                        foreach(var driverKvp in automaticallyMatchedDrivers)
                                         {
-                                            foreach(var driverKvp in automaticallyMatchedDrivers)
+                                            switch(externalReport.ReportType)
                                             {
-                                                switch(externalReport.ReportType)
-                                                {
-                                                    case ExternalReportType.Bolt:
-                                                        driverKvp.Value.BoltName = Strings.StringsToString(driverKvp.Value.BoltName, Strings.FirstCharToUpper(driverKvp.Key, false,StringSplitOptions.None));
-                                                        break;
-                                                    case ExternalReportType.Uber:
-                                                        driverKvp.Value.UberName = Strings.StringsToString(driverKvp.Value.UberName, Strings.FirstCharToUpper(driverKvp.Key, false, StringSplitOptions.None));
-                                                        break;
-                                                    case ExternalReportType.Freenow:
-                                                        driverKvp.Value.FreenowName = Strings.StringsToString(driverKvp.Value.FreenowName, Strings.FirstCharToUpper(driverKvp.Key, false, StringSplitOptions.None));
-                                                        break;
-                                                }
-                                                if (!string.IsNullOrWhiteSpace(driverKvp.Value.BoltName) && !string.IsNullOrWhiteSpace(driverKvp.Value.UberName) && !string.IsNullOrWhiteSpace(driverKvp.Value.FreenowName))
-                                                    driverKvp.Value.Confirmed = true;
+                                                case ExternalReportType.Bolt:
+                                                    driverKvp.Value.BoltName = Strings.StringsToString(driverKvp.Value.BoltName, Strings.FirstCharToUpper(driverKvp.Key, false,StringSplitOptions.None));
+                                                    break;
+                                                case ExternalReportType.Uber:
+                                                    driverKvp.Value.UberName = Strings.StringsToString(driverKvp.Value.UberName, Strings.FirstCharToUpper(driverKvp.Key, false, StringSplitOptions.None));
+                                                    break;
+                                                case ExternalReportType.Freenow:
+                                                    driverKvp.Value.FreenowName = Strings.StringsToString(driverKvp.Value.FreenowName, Strings.FirstCharToUpper(driverKvp.Key, false, StringSplitOptions.None));
+                                                    break;
                                             }
+                                            if (!string.IsNullOrWhiteSpace(driverKvp.Value.BoltName) && !string.IsNullOrWhiteSpace(driverKvp.Value.UberName) && !string.IsNullOrWhiteSpace(driverKvp.Value.FreenowName))
+                                                driverKvp.Value.Confirmed = true;
                                         }
-                                        var leftUnmatchedDrivers = unmatchedDrivers.Where(d => !automaticallyMatchedDrivers.ContainsKey(d)).ToList();
-                                        if (leftUnmatchedDrivers.Count>0)
-                                        {
-                                            foreach(var driverName in leftUnmatchedDrivers)
-                                            {
-                                                var driver = new Driver()
-                                                {
-                                                    TenantId = tenant.Id,
-                                                    CompanyName = Strings.FirstCharToUpper(driverName, false),
-                                                    Confirmed = false                                                    
-                                                };
-                                                switch (externalReport.ReportType)
-                                                {
-                                                    case ExternalReportType.Bolt:
-                                                        driver.BoltName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
-                                                        break;
-                                                    case ExternalReportType.Uber:
-                                                        driver.UberName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
-                                                        break;
-                                                    case ExternalReportType.Freenow:
-                                                        driver.FreenowName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
-                                                        break;
-                                                }
-                                                _dbContext.Drivers.Add(driver);                                                
-                                            }
-                                        }
-                                        _dbContext.SaveChanges();
                                     }
+                                    var leftUnmatchedDrivers = unmatchedDrivers.Where(d => !automaticallyMatchedDrivers.ContainsKey(d)).ToList();
+                                    if (leftUnmatchedDrivers.Count>0)
+                                    {
+                                        foreach(var driverName in leftUnmatchedDrivers)
+                                        {
+                                            var driver = new Driver()
+                                            {
+                                                TenantId = tenant.Id,
+                                                CompanyName = Strings.FirstCharToUpper(driverName, false),
+                                                Confirmed = false                                                    
+                                            };
+                                            switch (externalReport.ReportType)
+                                            {
+                                                case ExternalReportType.Bolt:
+                                                    driver.BoltName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
+                                                    break;
+                                                case ExternalReportType.Uber:
+                                                    driver.UberName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
+                                                    break;
+                                                case ExternalReportType.Freenow:
+                                                    driver.FreenowName = Strings.FirstCharToUpper(driverName, false, StringSplitOptions.None);
+                                                    break;
+                                            }
+                                            _dbContext.Drivers.Add(driver);                                                
+                                        }
+                                    }
+                                    _dbContext.SaveChanges();
                                 }
-                                var values = reportBody.GetValues();
-                                if (values != null)
+                            }
+                            var values = reportBody.GetValues();
+                            if (values != null)
+                            {
+                                if (request.DriverId.HasValue)
                                 {
-                                    if (request.DriverId.HasValue)
+                                    var driver = _dbContext.Drivers.FirstOrDefault(d => d.Id.Equals(request.DriverId.Value));
+                                    if (driver == null)
+                                        throw new Exception($"Driver with ID={request.DriverId.Value} does not exist");
+                                    if (driver.TenantId!=tenant.Id)
+                                        throw new Exception($"Appeared problem with ownership of driver with ID={request.DriverId.Value}");
+                                    var driverNames = driver.GetDriverNames();
+                                    var driverValues = values.Where(v => driverNames.Contains(v.Key)).ToList();
+                                    if (driverValues.Count > 1)
                                     {
-                                        var driver = _dbContext.Drivers.FirstOrDefault(d => d.Id.Equals(request.DriverId.Value));
-                                        if (driver == null)
-                                            throw new Exception($"Driver with ID={request.DriverId.Value} does not exist");
-                                        if (driver.TenantId!=tenant.Id)
-                                            throw new Exception($"Appeared problem with ownership of driver with ID={request.DriverId.Value}");
-                                        var driverNames = driver.GetDriverNames();
-                                        var driverValues = values.Where(v => driverNames.Contains(v.Key)).ToList();
-                                        if (driverValues.Count > 1)
-                                        {
-                                            _tenantServiceLogger.LogWarning($"Multiple values for driver names {string.Join(',', driverNames.Select(n => Strings.FirstCharToUpper(n, false, StringSplitOptions.None)))}");
-                                            List<double> tempValues = new List<double>();
-                                            for (int i = 0; i < driverValues.First().Value.Count; i++)
-                                                tempValues.Add(driverValues.Sum(v => v.Value[i]));
-                                            reportsValues.Add(externalReport.ReportType, tempValues);
-                                        }
-                                        else if (driverValues.Count == 1)
-                                            reportsValues.Add(externalReport.ReportType, driverValues.First().Value);
+                                        _tenantServiceLogger.LogWarning($"Multiple values for driver names {string.Join(',', driverNames.Select(n => Strings.FirstCharToUpper(n, false, StringSplitOptions.None)))}");
+                                        List<double> tempValues = new List<double>();
+                                        for (int i = 0; i < driverValues.First().Value.Count; i++)
+                                            tempValues.Add(driverValues.Sum(v => v.Value[i]));
+                                        reportsValues.Add(externalReport.ReportType, tempValues);
                                     }
-                                    else
+                                    else if (driverValues.Count == 1)
+                                        reportsValues.Add(externalReport.ReportType, driverValues.First().Value);
+                                }
+                                else
+                                {
+                                    var doubles = new List<double>();
+                                    for (int i = 0; i < columnNames.Count; i++)
+                                        doubles.Add(values.Sum(v => v.Value[i]));
+                                    reportsValues.Add(externalReport.ReportType, doubles);
+                                }
+                                //collect inforamtion about reportValuesPerDriver
+                                foreach (var valuesKvp in values)
+                                {
+                                    if (databaseDrivers.TryGetValue(valuesKvp.Key.ToLower(), out Driver driver))
                                     {
-                                        var doubles = new List<double>();
-                                        for (int i = 0; i < columnNames.Count; i++)
-                                            doubles.Add(values.Sum(v => v.Value[i]));
-                                        reportsValues.Add(externalReport.ReportType, doubles);
+                                        if (valuesPerDriver.TryGetValue(driver,out List<double> driverValues))
+                                        {
+                                            for (int i = 0; i < columnNames.Count; i++)
+                                                driverValues[i] += valuesKvp.Value[i];
+                                        }
+                                        else
+                                        {
+                                            driverValues = new List<double>();
+                                            for (int i = 0; i < columnNames.Count; i++)
+                                                driverValues.Add(valuesKvp.Value[i]);
+                                            valuesPerDriver.Add(driver, driverValues);
+                                        }
                                     }
                                 }
                             }
-                            externalReports.Add(externalReport);
                         }
-                        //calculate number of unmatched drivers
-                        foreach (var report in externalReports)
-                        {
-                            if (reportDriversDict.TryGetValue(report.ReportType, out var driverNames))
-                            {
-                                var databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, report.ReportType);
-                                report.NotComfirmedDriversIdentifiers = databaseDrivers.Where(d => !d.Value.Confirmed && driverNames.Contains(d.Key)).Select(d => d.Value.Id).ToHashSet();
-                            }
-                        }
-                        AddReportValues(weeklySettlementComponents, columnNames, reportsValues);
+                        externalReports.Add(externalReport);
                     }
-                    AddCarRentalCosts(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
-                    AddFuelCosts(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
-                    AddOtherSettlementItems(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
-                    AddApplicationFee(weeklySettlementComponents, tenant, request.DriverId, request.YearNumber, request.WeekNumber);
+                    //calculate number of unmatched drivers
+                    foreach (var report in externalReports)
+                    {
+                        if (reportDriversDict.TryGetValue(report.ReportType, out var driverNames))
+                        {
+                            var databaseDrivers = GetDatabaseDriverNamesDict(tenant.Id, report.ReportType);
+                            report.NotComfirmedDriversIdentifiers = databaseDrivers.Where(d => !d.Value.Confirmed && driverNames.Contains(d.Key)).Select(d => d.Value.Id).ToHashSet();
+                        }
+                    }
+                    AddReportValues(weeklySettlementComponents, columnNames, reportsValues);
                 }
+                AddCarRentalCosts(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
+                AddFuelCosts(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
+                AddOtherSettlementItems(weeklySettlementComponents, tenant.Id, request.DriverId, request.YearNumber, request.WeekNumber);
+                AddPartnershipFee(weeklySettlementComponents, tenant, request.DriverId, request.YearNumber, request.WeekNumber, columnNames, valuesPerDriver);
+                AddApplicationFee(weeklySettlementComponents, tenant, request.DriverId, request.YearNumber, request.WeekNumber);
+
                 var billingWeek = _dbContext.BillingWeeks.FirstOrDefault(bw=>bw.TenantId.Equals(tenant.Id) 
                     && bw.YearNumber.Equals(request.YearNumber) && bw.WeekNumber.Equals(request.WeekNumber));
                 var billingWeekStatus = (billingWeek == null ? BillingWeekStatus.NotExists : billingWeek.Status);
@@ -732,6 +761,29 @@ namespace DriverSettlements.WebAPI.Services
                 if (value != 0.0)
                     weeklySettlementComponents.Add(settlementType.TypeName, value);
             }
+        }
+
+        private void AddPartnershipFee(Dictionary<string, double> weeklySettlementComponents, Tenant tenant, int? driverId, int yearNumber, int weekNumber, List<string> columnNames, Dictionary<Driver, List<double>> valuesPerDriver)
+        {
+            var settlementType = _dbContext.SettlementTypes.FirstOrDefault(st => st.Id == 19);
+            if (settlementType == null)
+                return;
+            var billingWeek = _dbContext.BillingWeeks.FirstOrDefault(bw => bw.TenantId.Equals(tenant.Id)
+                && bw.YearNumber.Equals(yearNumber) && bw.WeekNumber.Equals(weekNumber));
+            if (billingWeek == null || billingWeek.Status != BillingWeekStatus.Closed || !billingWeek.NumberOfDrivers.HasValue)
+                return;
+            var tempValues = valuesPerDriver.Where(vpd => vpd.Key.PartnershipFee.HasValue);
+            if (driverId.HasValue)
+                tempValues = tempValues.Where(vpd => vpd.Key.Id == driverId.Value);
+            if (tempValues.Count() < 1)
+                return;
+            var columnIdx = columnNames.IndexOf("Utarg brutto");
+            if (columnIdx < 0)
+                return;
+            var sum = tempValues.Sum(vpd => vpd.Key.PartnershipFee * vpd.Value[columnIdx] / 100.0);
+            if (!sum.HasValue)
+                return;
+            weeklySettlementComponents.Add(settlementType.TypeName, sum.Value * (settlementType.Debit ? -1.0 : 1.0) * settlementType.Factor);
         }
 
         private void AddApplicationFee(Dictionary<string, double> weeklySettlementComponents, Tenant tenant, int? driverId, int yearNumber, int weekNumber)
@@ -1641,6 +1693,10 @@ namespace DriverSettlements.WebAPI.Services
                 settlementItem.SettlementTypeId = request.SettlementItem.SettlementTypeId;
                 settlementItem.Value =  request.SettlementItem.Value;
                 settlementItem.Periodic = request.SettlementItem.Periodic;
+                if (request.SettlementItem.NumberOfTimes.HasValue)
+                    settlementItem.NumberOfTimes = request.SettlementItem.NumberOfTimes.Value;
+                else
+                    settlementItem.NumberOfTimes = null;
                 _dbContext.SaveChanges();
                 return new UpdateSettlementItemResponse()
                 {
@@ -1712,18 +1768,25 @@ namespace DriverSettlements.WebAPI.Services
                         Result = true
                     };
                 }
-                foreach (var settleentItem in settlementItems)
+                foreach (var settlementItem in settlementItems)
                 {
                     var newSettlementItem = new SettlementItem()
                     {
                         YearNumber = request.YearNumber,
                         WeekNumber = request.WeekNumber,
-                        TenantId = settleentItem.TenantId,
-                        DriverId = settleentItem.DriverId,
-                        SettlementTypeId = settleentItem.SettlementTypeId,
-                        Periodic = settleentItem.Periodic,
-                        Value = settleentItem.Value
+                        TenantId = settlementItem.TenantId,
+                        DriverId = settlementItem.DriverId,
+                        SettlementTypeId = settlementItem.SettlementTypeId,
+                        Periodic = settlementItem.Periodic,
+                        Value = settlementItem.Value
                     };
+                    if (settlementItem.NumberOfTimes.HasValue)
+                    {
+                        if (settlementItem.NumberOfTimes.Value > 1)
+                            newSettlementItem.NumberOfTimes = settlementItem.NumberOfTimes.Value - 1;
+                        else if (settlementItem.NumberOfTimes.Value == 1) 
+                            newSettlementItem.Periodic = false;
+                    }
                     _dbContext.SettlementItems.Add(newSettlementItem);
                 }
                 _dbContext.SaveChanges();

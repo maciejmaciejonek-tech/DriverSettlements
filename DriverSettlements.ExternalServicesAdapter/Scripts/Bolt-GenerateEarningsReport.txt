@@ -1,4 +1,4 @@
-function getElementsByText(str, tag = 'div') {
+﻿function getElementsByText(str, tag = 'div') {
   return Array.prototype.slice.call(document.getElementsByTagName(tag)).filter(el => el.textContent.trim() === str.trim());
 }
 
@@ -82,7 +82,46 @@ function getMonth()
   var elements = document.querySelectorAll('[class="react-datepicker__month"]');
   if (elements==null || elements.length<1)
     return null;
-  return elements[0].getAttribute('aria-label').split('  ')[1];
+//  return elements[0].getAttribute('aria-label').split('  ')[1];
+   var text = elements[0].getAttribute('aria-label');
+   var year = getYearNumber(text);
+   var month = getMonthNumber(text);
+   return year+'-'+month;
+}
+
+function getYearNumber(text)
+{
+   var yearRegex = /(^|\ |,|\.|-)(\d{4})($|\ |,|\.|-)/
+   return yearRegex.exec(text)[2]
+}
+
+function getMonthNumber(text)
+{
+    if (text.match(/(^|\ |,|\.|-)(january|jan|styczeń|sty|01|1)($|\ |,|\.|-)/i)!=null)
+        return "01";
+    if (text.match(/(^|\ |,|\.|-)(february|feb|luty|lut|02|2)($|\ |,|\.|-)/i)!=null)
+        return "02";
+    if (text.match(/(^|\ |,|\.|-)(march|mar|marzec|mar|03|3)($|\ |,|\.|-)/i)!=null)
+        return "03";
+    if (text.match(/(^|\ |,|\.|-)(april|apr|kwiecień|kwi|04|4)($|\ |,|\.|-)/i)!=null)
+        return "04";
+    if (text.match(/(^|\ |,|\.|-)(may|maj|05|5)($|\ |,|\.|-)/i)!=null)
+        return "05";
+    if (text.match(/(^|\ |,|\.|-)(june|jun|czerwiec|cze|06|6)($|\ |,|\.|-)/i)!=null)
+        return "06";
+    if (text.match(/(^|\ |,|\.|-)(july|jul|lipiec|lip|07|7)($|\ |,|\.|-)/i)!=null)
+        return "07";
+    if (text.match(/(^|\ |,|\.|-)(august|aug|sierpień|sie|08|8)($|\ |,|\.|-)/i)!=null)
+        return "08";
+    if (text.match(/(^|\ |,|\.|-)(september|sep|wrzesień|wrz|09|9)($|\ |,|\.|-)/i)!=null)
+        return "09";
+    if (text.match(/(^|\ |,|\.|-)(october|oct|październik|paź|10)($|\ |,|\.|-)/i)!=null)
+        return "10";
+    if (text.match(/(^|\ |,|\.|-)(november|mov|listopad|lis|11)($|\ |,|\.|-)/i)!=null)
+        return "11";
+    if (text.match(/(^|\ |,|\.|-)(december|dec|grudzień|gru|12)($|\ |,|\.|-)/i)!=null)
+        return "12";
+    return "00";
 }
 
 function getPreviousMonth()
@@ -125,6 +164,7 @@ function setDay(dayNumber)
 
 function executeAction(firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay, actionNumber)
 {
+//debugger;
 /*
 0 - clickDateRanges
 1 - setFirstDate

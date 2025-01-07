@@ -381,6 +381,9 @@
   <data name="SettlementType.MandateContract" xml:space="preserve">
     <value>Mandate contract</value>
   </data>
+  <data name="SettlementType.PartnershipFee" xml:space="preserve">
+    <value>Partnership fee</value>
+  </data>
   <data name="SettlementType.TOTAL" xml:space="preserve">
     <value>TOTAL</value>
   </data>

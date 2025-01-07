@@ -1,58 +1,120 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-maccatalyst;net8.0-android;net8.0-ios</TargetFrameworks>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
 		<OutputType>Exe</OutputType>
 		<RootNamespace>DriverSettlements.App</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Driver Settlements</ApplicationTitle>
+		<ApplicationTitle>DriverSettlements.App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.macmac.driversettlements</ApplicationId>
-		<ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+		<ApplicationId>com.companyname.driversettlements.app</ApplicationId>
 
-    <!-- Versions -->
-    <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
-    <ApplicationVersion>10</ApplicationVersion>
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<PackAsTool>False</PackAsTool>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <EnableMsixTooling>true</EnableMsixTooling>
-    <PublishProfile>Properties\PublishProfiles\MSIX-$(Platform).pubxml</PublishProfile>
-  </PropertyGroup>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-    <ProvisioningType>manual</ProvisioningType>
-    <CodesignKey>Apple Distribution: Maciej Maciejonek (7723A9VLS4)</CodesignKey>
-    <CodesignProvision>Provisioning Profile for app distribution</CodesignProvision>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
+	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
+	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
+	  <ApplicationDisplayVersion>1.0.11</ApplicationDisplayVersion>
+	  <ApplicationVersion>10</ApplicationVersion>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\driver_settlements.svg" Color="#512BD4" />
 
-		<!-- Splash Screen -->
+			<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\driver_settlements.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Images\dotnet_bot1.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -62,103 +124,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
-		<PackageReference Include="FreakyControls" Version="0.4.10" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="zoft.MauiExtensions.Controls.AutoCompleteEntry" Version="2.0.0" />
+	  <MauiFont Remove="Resources\Fonts\FluentUI.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DriverSettlements.Common\DriverSettlements.Common.csproj" />
+	  <None Remove="Resources\AppIcon\appiconfg.svg" />
+	  <None Remove="Resources\AppIcon\info.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="CustomControls\ToggleButton.xaml.cs">
-	    <DependentUpon>ToggleButton.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantSettlementItemPage.xaml.cs">
-	    <DependentUpon>TenantSettlementItemPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantTariffPlanAssignmentPage.xaml.cs">
-	    <DependentUpon>TenantTariffPlanAssignmentPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantSettlementTypePage.xaml.cs">
-	    <DependentUpon>TenantSettlementTypePage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantSettlementTypesPage.xaml.cs">
-	    <DependentUpon>TenantSettlementTypesPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantTariffPlansPage.xaml.cs">
-	    <DependentUpon>TenantTariffPlansPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantTariffPlanPage.xaml.cs">
-	    <DependentUpon>TenantTariffPlanPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantFuelBillVerificationPage.xaml.cs">
-	    <DependentUpon>TenantFuelBillVerificationPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriverFuelBillPage.xaml.cs">
-	    <DependentUpon>DriverFuelBillPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantFuelBillsPage.xaml.cs">
-	    <DependentUpon>TenantFuelBillsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriversConfirmationAndMappingsPage.xaml.cs">
-	    <DependentUpon>DriversConfirmationAndMappingsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriverFuelBillsPage.xaml.cs">
-	    <DependentUpon>DriverFuelBillsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantTariffPlanAssignmentsPage.xaml.cs">
-	    <DependentUpon>TenantTariffPlanAssignmentsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantSettlementItemsPage.xaml.cs">
-	    <DependentUpon>TenantSettlementItemsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantWeekPage.xaml.cs">
-	    <DependentUpon>TenantWeekPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="MasterAdminSettingsPage.xaml.cs">
-	    <DependentUpon>MasterAdminSettingsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantExternalServicesSettingsPage.xaml.cs">
-	    <DependentUpon>TenantExternalServicesSettingsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="ErrorPage.xaml.cs">
-	    <DependentUpon>ErrorPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="InvitationPage.xaml.cs">
-	    <DependentUpon>InvitationPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriverDetailsPage.xaml.cs">
-	    <DependentUpon>DriverDetailsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="ApplicationProfileDetailsPage.xaml.cs">
-	    <DependentUpon>ApplicationProfileDetailsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriverWeekPage.xaml.cs">
-	    <DependentUpon>DriverWeekPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantDetailsPage.xaml.cs">
-	    <DependentUpon>TenantDetailsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="DriversPage.xaml.cs">
-	    <DependentUpon>DriversPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="ApplicationProfilesPage.xaml.cs">
-	    <DependentUpon>ApplicationProfilesPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="TenantsPage.xaml.cs">
-	    <DependentUpon>TenantsPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="WelcomePage.xaml.cs">
-	    <DependentUpon>WelcomePage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Localization\ApplicationStrings.pl.Designer.cs">
-	    <DependentUpon>ApplicationStrings.pl.resx</DependentUpon>
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	  </Compile>
+		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
+		<PackageReference Include="FreakyControls" Version="0.5.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.22" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
+		<PackageReference Include="zoft.MauiExtensions.Controls.AutoCompleteEntry" Version="3.0.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\DriverSettlementsSolution\DriverSettlements.Common\DriverSettlements.Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Resources\Localization\ApplicationStrings.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -167,10 +154,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Localization\ApplicationStrings.pl.resx">
-	    <LastGenOutput>ApplicationStrings.pl.Designer.cs</LastGenOutput>
-	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Localization\ApplicationStrings.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>ApplicationStrings.Designer.cs</LastGenOutput>
@@ -178,102 +161,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="CustomControls\ToggleButton.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="CustomControls\ButtonControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantSettlementItemPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantTariffPlanAssignmentPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantSettlementTypePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantSettlementTypesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantTariffPlansPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantTariffPlanPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantFuelBillVerificationPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriverFuelBillPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantFuelBillsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriversConfirmationAndMappingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriverFuelBillsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantTariffPlanAssignmentsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantSettlementItemsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantWeekPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="MasterAdminSettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantExternalServicesSettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="ErrorPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="InvitationPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriverDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="ApplicationProfileDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriverWeekPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="DriversPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="ApplicationProfilesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TenantsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="WelcomePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.10" />
-	</ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.10" />
+	  <MauiFont Update="Resources\Fonts\OpenSans-Regular.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiFont>
+	  <MauiFont Update="Resources\Fonts\OpenSans-Semibold.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiFont>
 	</ItemGroup>
 
 </Project>

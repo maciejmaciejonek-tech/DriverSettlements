@@ -21,4 +21,5 @@ namespace DriverSettlements.App.WinUI
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
     }
+
 }

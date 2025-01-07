@@ -4,20 +4,18 @@
              xmlns:customControls="clr-namespace:DriverSettlements.App.CustomControls"
              xmlns:res="clr-namespace:DriverSettlements.App.Resources.Localization"
              x:Class="DriverSettlements.App.MasterAdminSettingsPage">
-
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,3">
+            <Label x:Name="Title" Text="{x:Static res:ApplicationStrings.ShellContent_MasterAdminSettings}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
     <ScrollView>
         <VerticalStackLayout
             VerticalOptions="Center" Spacing="5">
-            <customControls:ButtonControl x:Name="AddDefaultReports" 
-                Text="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddDefaultReports}"
-                LoadingText="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddDefaultReports}"
-                Clicked="AddDefaultReports_Clicked"
-                WidthRequest="250"/>
-            <customControls:ButtonControl x:Name="AddSettlementTypes" 
-                Text="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddSettlementTypes}"
-                LoadingText="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddSettlementTypes}"
-                Clicked="AddSettlementTypes_Clicked"
-                WidthRequest="250"/>
+            <Label Text="Button1:"/>
+            <Label Text="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddDefaultReports}"/>
+            <Label Text="Button2:"/>
+            <Label Text="{x:Static res:ApplicationStrings.MasterAdminSettingsPage_AddSettlementTypes}"/>
         </VerticalStackLayout>
     </ScrollView>
 

@@ -7,7 +7,7 @@
              x:Class="DriverSettlements.App.DriverFuelBillsPage">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,Auto">
-            <Label Text="Rachunki za paliwo" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <Label Text="Rachunki za paliwo" Grid.Column="0" FontSize="20" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" />
             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
                 <customControls:ButtonControl x:Name="EditFuelBill"
                         Text="Edytuj" LoadingText="Edytuj" 

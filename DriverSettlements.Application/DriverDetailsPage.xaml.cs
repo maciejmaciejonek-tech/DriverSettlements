@@ -71,7 +71,7 @@ namespace DriverSettlements.App
 
         private static string GetSignature(Driver driver)
         {
-            return $"{driver.FriendlyName}|{driver.CompanyName}|{driver.EmailAddress}|{driver.BoltName}|{driver.UberName}|{driver.FreenowName}|{driver.Deposit}|{driver.ApplicationFeeChargeDriver}|{driver.Confirmed}|{driver.Blocked}|{driver.Deleted}";
+            return $"{driver.FriendlyName}|{driver.CompanyName}|{driver.EmailAddress}|{driver.BoltName}|{driver.UberName}|{driver.FreenowName}|{driver.Deposit}|{driver.PartnershipFee}|{driver.ApplicationFeeChargeDriver}|{driver.Confirmed}|{driver.Blocked}|{driver.Deleted}";
         }
 
         private async void CancelButton_Clicked(object sender, EventArgs e)
@@ -125,6 +125,8 @@ namespace DriverSettlements.App
             {
                 if (_mode == Mode.AddNew)
                 {
+                    if (string.IsNullOrWhiteSpace(PartnershipFee.Text))
+                        Driver.PartnershipFee = null;
                     if (await _driversListController.AddObject(Driver))
                     {
                         //_applicationController.TenantController.WeeksController.ForceDataRefresh = true;
@@ -134,6 +136,8 @@ namespace DriverSettlements.App
                 }
                 else if (_mode== Mode.Edit)
                 {
+                    if (string.IsNullOrWhiteSpace(PartnershipFee.Text))
+                        Driver.PartnershipFee = null;
                     if (string.IsNullOrWhiteSpace(_driverSignature) || _driverSignature.Equals(GetSignature(Driver)))
                     {
                         await Shell.Current.GoToAsync("..");
@@ -164,6 +168,15 @@ namespace DriverSettlements.App
             {
                 Deposit.CursorPosition = 0;
                 Deposit.SelectionLength = Deposit.Text == null ? 0 : Deposit.Text.Length;
+            });
+        }
+
+        private void PartnershipFee_Focused(object sender, FocusEventArgs e)
+        {
+            Dispatcher.Dispatch(() =>
+            {
+                PartnershipFee.CursorPosition = 0;
+                PartnershipFee.SelectionLength = Deposit.Text == null ? 0 : PartnershipFee.Text.Length;
             });
         }
     }

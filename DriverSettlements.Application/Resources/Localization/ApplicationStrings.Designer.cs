@@ -853,6 +853,15 @@ namespace DriverSettlements.App.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Partnership fee.
+        /// </summary>
+        internal static string SettlementType_PartnershipFee {
+            get {
+                return ResourceManager.GetString("SettlementType.PartnershipFee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TOTAL.
         /// </summary>
         internal static string SettlementType_TOTAL {

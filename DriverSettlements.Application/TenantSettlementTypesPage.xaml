@@ -7,7 +7,7 @@
              x:Class="DriverSettlements.App.TenantSettlementTypesPage">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,Auto,3">
-            <Label x:Name="Title" Grid.Column="0" Text="Rodzaje rozliczeń" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <Label x:Name="Title" Grid.Column="0" Text="Rodzaje rozliczeń" FontSize="20" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" />
             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5" Padding="5">
                 <customControls:ButtonControl x:Name="EditSettlementTypeButton"                        
                         Text="Edytuj" LoadingText="Edytuj" 

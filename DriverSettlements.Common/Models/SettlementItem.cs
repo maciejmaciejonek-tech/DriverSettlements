@@ -29,8 +29,10 @@ namespace DriverSettlements.Common.Models
         [Column(Order = 6)]
         public bool Periodic { get; set; } = false;
         [Column(Order = 7)]
-        public double Value { get; set; }
+        public int? NumberOfTimes { get; set; } = null;
         [Column(Order = 8)]
+        public double Value { get; set; }
+        [Column(Order = 9)]
         public string? Description { get; set; } = null;
 
         [ForeignKey("TenantId")]

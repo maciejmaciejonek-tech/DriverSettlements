@@ -381,6 +381,9 @@
   <data name="SettlementType.MandateContract" xml:space="preserve">
     <value>Mandat</value>
   </data>
+  <data name="SettlementType.PartnershipFee" xml:space="preserve">
+    <value>Opłata partnerska</value>
+  </data>
   <data name="SettlementType.TOTAL" xml:space="preserve">
     <value>RAZEM</value>
   </data>
@@ -410,6 +413,9 @@
   </data>
   <data name="ShellContent_Invitation" xml:space="preserve">
     <value>Rejestracja aplikacji</value>
+  </data>
+  <data name="ShellContent_MasterAdmin" xml:space="preserve">
+    <value>Najemcy</value>
   </data>
   <data name="ShellContent_MasterAdminSettings" xml:space="preserve">
     <value>Ustawienia</value>
@@ -452,6 +458,18 @@
   </data>
   <data name="TenantWeekDetailsPage_WrongUberReportName" xml:space="preserve">
     <value>Oczekiwana nazwa raportu zaczynająca się od frazy: {0}</value>
+  </data>
+  <data name="TenantWeekOperationStatus_InProgress" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="TenantWeekOperationStatus_NotStarted" xml:space="preserve">
+    <value>OrangeRed</value>
+  </data>
+  <data name="TenantWeekOperationStatus_Realized" xml:space="preserve">
+    <value>LightGreen</value>
+  </data>
+  <data name="TenantWeekOperationStatus_Warning" xml:space="preserve">
+    <value>Orange</value>
   </data>
   <data name="TenantWeeksPage_DownloadingExternalReports" xml:space="preserve">
     <value>Pobieranie raportów zewnętrzych</value>

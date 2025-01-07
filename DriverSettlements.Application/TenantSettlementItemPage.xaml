@@ -9,7 +9,7 @@
              x:Class="DriverSettlements.App.TenantSettlementItemPage">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,Auto">
-            <Label x:Name="Title" Text="Rozliczenie" Grid.Column="0" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+            <Label x:Name="Title" Text="Rozliczenie" Grid.Column="0" FontSize="20" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" />
             <HorizontalStackLayout x:Name="Navigator" HorizontalOptions="End" Spacing="5" Padding="5" Grid.Column="1">
                 <customControls:ButtonControl x:Name="SaveButton"
                         Text="Zapisz" LoadingText="Zapisz" BackgroundColor="OrangeRed" TextColor="Black" BorderColor="Black"
@@ -23,7 +23,7 @@
         </Grid>
     </Shell.TitleView>
     <Grid RowDefinitions="10,*">
-        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="3">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="5" RowSpacing="3">
             <Label Grid.Row="0" Grid.Column="1" Text="Kierowca:" FontSize="14" HorizontalTextAlignment="End" VerticalOptions="Center"/>
             <zoft:AutoCompleteEntry Grid.Row="0" Grid.Column="2" x:Name="DriverName"
                 Placeholder="Wyszukaj imię i nazwisko kierowcy" TextMemberPath="CompanyName" DisplayMemberPath="CompanyName"
@@ -41,7 +41,7 @@
             <Label Grid.Row="2" Grid.Column="1" Text="Kwota:" FontSize="14" HorizontalOptions="End" VerticalOptions="Center"/>
             <Entry Grid.Row="2" Grid.Column="2" x:Name="WeeklyRate" 
                    Text="{Binding SettlementItem.Value, StringFormat='{0:#0.00}'}" FontSize="12" WidthRequest="150" Keyboard="Numeric"  HorizontalOptions="Start" Focused="WeeklyRate_Focused"/>
-            <Label Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Text="Tryb:" FontSize="14" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Row="3" Grid.Column="1" Text="Tryb:" FontSize="14" HorizontalOptions="End" VerticalOptions="Center"/>
             <Grid Grid.Row="3" RowSpacing="1" Grid.Column="2" ColumnDefinitions="*" RowDefinitions="38,38">
                 <StackLayout Grid.Row="0" BackgroundColor="LightGray">
                     <RadioButton x:Name="PeriodicType0" Value="0" Content="Brak powielania" FontSize="14" GroupName="Periodic" />
@@ -50,6 +50,9 @@
                     <RadioButton x:Name="PeriodicType1" Value="1" Content="Powielanie" FontSize="14" GroupName="Periodic"/>
                 </StackLayout>
             </Grid>
+            <Label Grid.Row="4" Grid.Column="1" Text="Liczba powtórzeń:" FontSize="14" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="4" Grid.Column="2" x:Name="NumberOfTimes" 
+                   Text="{Binding SettlementItem.NumberOfTimes, StringFormat='{0:#0}'}" FontSize="12" WidthRequest="150" Keyboard="Numeric"  HorizontalOptions="Start" Focused="NumberOfTimes_Focused"/>
         </Grid>
     </Grid>
 </ContentPage>

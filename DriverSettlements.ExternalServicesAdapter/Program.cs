@@ -56,9 +56,9 @@ namespace DriverSettlements.ExternalServicesAdapter
                 PerformAction();
                 return;
 
-                //var form1 = new Form1();
-                //form1.SetPerformAction(PerformAction);
-                //Application.Run(form1);
+//                var form1 = new Form1();
+//                form1.SetPerformAction(PerformAction);
+//                Application.Run(form1);
 
 
                 bool PerformAction(WebView2? webView = null)
