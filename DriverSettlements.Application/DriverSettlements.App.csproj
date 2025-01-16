@@ -107,9 +107,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-	  <ProvisioningType>automatic</ProvisioningType>
-	  <CodesignKey>Apple Development: Created via API (K37CNQVWC2)</CodesignKey>
-	  <CodesignProvision>VS: com.macmac.driversettlements Development</CodesignProvision>
+	  <ProvisioningType>manual</ProvisioningType>
+	  <CodesignKey>Apple Distribution: Maciej Maciejonek (7723A9VLS4)</CodesignKey>
+	  <CodesignProvision>Driver Settlements Provisioning Profile</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
