@@ -13,7 +13,7 @@ public partial class ButtonControl : Frame
 
     public double FontSize
     {
-        get => lblButtonText==null?14:lblButtonText.FontSize;
+        get => lblButtonText==null?10:lblButtonText.FontSize;
         set => lblButtonText.FontSize = value;
     }
 

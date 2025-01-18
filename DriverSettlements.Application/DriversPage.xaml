@@ -35,21 +35,21 @@
             <customControls:ToggleButton x:Name="NumberOfExternalServices1"
                 Grid.Row="0" Grid.Column="1"
                 Toggled="False"
-                Text="1" BorderColor="Black"
+                Text="1" BorderColor="Black" FontSize="10" TextColor="Black"
                 ToggleOffColor="LightGray"
                 Clicked="ToggleButton_Clicked"
                 WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
             <customControls:ToggleButton x:Name="NumberOfExternalServices2"
                 Grid.Row="0" Grid.Column="2"
                 Toggled="False"
-                Text="2" BorderColor="Black"
+                Text="2" BorderColor="Black" FontSize="10" TextColor="Black"
                 ToggleOffColor="LightGray"
                 Clicked="ToggleButton_Clicked"
                 WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
             <customControls:ToggleButton x:Name="NumberOfExternalServices3"
                 Grid.Row="0" Grid.Column="3"
                 Toggled="False"
-                Text="3" BorderColor="Black"
+                Text="3" BorderColor="Black" FontSize="10" TextColor="Black"
                 ToggleOffColor="LightGray"
                 Clicked="ToggleButton_Clicked"
                 WidthRequest="30" HeightRequest="30" VerticalOptions="Center"/>
@@ -58,13 +58,13 @@
             x:Name="driversView"
             BackgroundColor="Transparent"
             SeparatorColor="Silver"
-            RowHeight="50"
+            RowHeight="52"
             ItemTapped="driversView_ItemTapped" 
             Margin="5,5,5,5" IsPullToRefreshEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid RowDefinitions="Auto,28">
+                        <Grid RowDefinitions="Auto,30">
                             <Grid.BackgroundColor>
                                 <Binding Path="Selected">
                                     <Binding.Converter>
@@ -80,7 +80,7 @@
                                 <customControls:ButtonControl
                                         Text="Bolt" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                     <customControls:ButtonControl.BackgroundColor>
                                         <Binding Path="BoltName">
                                             <Binding.Converter>
@@ -94,7 +94,7 @@
                                 <customControls:ButtonControl
                                         Text="Uber" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                     <customControls:ButtonControl.BackgroundColor>
                                         <Binding Path="UberName">
                                             <Binding.Converter>
@@ -108,7 +108,7 @@
                                 <customControls:ButtonControl
                                         Text="Freenow" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                     <customControls:ButtonControl.BackgroundColor>
                                         <Binding Path="FreenowName">
                                             <Binding.Converter>
