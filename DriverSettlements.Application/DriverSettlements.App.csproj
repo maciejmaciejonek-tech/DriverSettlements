@@ -45,40 +45,40 @@
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
       <RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers>		
 	</PropertyGroup>
 
@@ -86,24 +86,24 @@
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationTitle>Driver Settlements</ApplicationTitle>
 	  <ApplicationId>com.macmac.driversettlements</ApplicationId>
 	  <ApplicationIdGuid>49c78e26-3826-40db-b20f-1940b6cbc5b7</ApplicationIdGuid>
-	  <ApplicationDisplayVersion>1.0.15</ApplicationDisplayVersion>
-	  <ApplicationVersion>15</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.0.16</ApplicationDisplayVersion>
+	  <ApplicationVersion>16</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
