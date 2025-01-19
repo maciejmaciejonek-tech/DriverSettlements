@@ -24,7 +24,7 @@
             <customControls:ButtonControl x:Name="BoltInfo"
                                         Text="Bolt" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                 <customControls:ButtonControl.BackgroundColor>
                     <Binding Path="Driver.BoltName">
                         <Binding.Converter>
@@ -38,7 +38,7 @@
             <customControls:ButtonControl x:Name="UberInfo"
                                         Text="Uber" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                 <customControls:ButtonControl.BackgroundColor>
                     <Binding Path="Driver.UberName">
                         <Binding.Converter>
@@ -52,7 +52,7 @@
             <customControls:ButtonControl x:Name="FreenowInfo"
                                         Text="Freenow" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                 <customControls:ButtonControl.BackgroundColor>
                     <Binding Path="Driver.FreenowName">
                         <Binding.Converter>
@@ -87,7 +87,7 @@
             BackgroundColor="Transparent"
             SeparatorColor="Silver"
             ItemTapped="driversView_ItemTapped"
-            RowHeight="50"
+            RowHeight="52"
             Margin="5,5,5,5" IsPullToRefreshEnabled="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -108,7 +108,7 @@
                                     <customControls:ButtonControl
                                         Text="Bolt" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                         <customControls:ButtonControl.BackgroundColor>
                                             <Binding Path="BoltName">
                                                 <Binding.Converter>
@@ -122,7 +122,7 @@
                                     <customControls:ButtonControl
                                         Text="Uber" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                         <customControls:ButtonControl.BackgroundColor>
                                             <Binding Path="UberName">
                                                 <Binding.Converter>
@@ -136,7 +136,7 @@
                                     <customControls:ButtonControl
                                         Text="Freenow" FontSize="10"
                                         BorderColor="Black" TextColor="Black"
-                                        WidthRequest="60" HeightRequest="28">
+                                        WidthRequest="60" HeightRequest="30">
                                         <customControls:ButtonControl.BackgroundColor>
                                             <Binding Path="FreenowName">
                                                 <Binding.Converter>
