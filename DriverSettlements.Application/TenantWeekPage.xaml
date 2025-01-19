@@ -124,6 +124,7 @@
             <VerticalStackLayout x:Name="BoltActions">
                 <HorizontalStackLayout Spacing="5" >
                     <customControls:ButtonControl
+                        x:Name="DownloadBoldReport"
                         Text="Pobierz raport Bolt" LoadingText="Pobierz raport Bolt" 
                         WidthRequest="180" FontSize="12" VerticalOptions="Center"
                         IsEnabled="True"
@@ -139,6 +140,7 @@
             <VerticalStackLayout x:Name="UberActions">
                 <HorizontalStackLayout Spacing="5" >
                     <customControls:ButtonControl
+                        x:Name="DownloadUberReport"
                         Text="Pobierz raport Uber" LoadingText="Pobierz raport Uber" 
                         WidthRequest="180" FontSize="12" VerticalOptions="Center"
                         IsEnabled="True"
@@ -154,6 +156,7 @@
             <VerticalStackLayout x:Name="FreenowActions">
                 <HorizontalStackLayout Spacing="5">
                     <customControls:ButtonControl
+                        x:Name="DownloadFreenowReport"
                         Text="Pobierz raport Freenow" LoadingText="Pobierz raport Freenow" 
                         WidthRequest="180" FontSize="12" VerticalOptions="Center"
                         IsEnabled="True"

@@ -727,6 +727,24 @@ namespace DriverSettlements.App.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No information.
+        /// </summary>
+        internal static string Messages_NoInformation {
+            get {
+                return ResourceManager.GetString("Messages_NoInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A - Not Applicable.
+        /// </summary>
+        internal static string Messages_NotApplicable {
+            get {
+                return ResourceManager.GetString("Messages_NotApplicable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Week report.
         /// </summary>
         internal static string Reports_BasicReport {

@@ -339,6 +339,12 @@
   <data name="MasterAdminSettingsPage_AddSettlementTypes" xml:space="preserve">
     <value>Add settlement types</value>
   </data>
+  <data name="Messages_NoInformation" xml:space="preserve">
+    <value>No information</value>
+  </data>
+  <data name="Messages_NotApplicable" xml:space="preserve">
+    <value>N/A - Not Applicable</value>
+  </data>
   <data name="Reports_BasicReport" xml:space="preserve">
     <value>Week report</value>
   </data>

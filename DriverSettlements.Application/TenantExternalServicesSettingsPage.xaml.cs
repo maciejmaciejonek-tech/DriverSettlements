@@ -29,6 +29,10 @@ namespace DriverSettlements.App
                 if (await _applicationController.TenantController.EnsureTenant())
                 {
                     Tenant = _applicationController.TenantController.Tenant;
+                    OnPropertyChanged("Tenant");
+                    ButtonBoltTest.IsVisible = !Tenant.CompanyName.Equals("Demo");
+                    ButtonUberTest.IsVisible = !Tenant.CompanyName.Equals("Demo");
+                    ButtonFreenowTest.IsVisible = !Tenant.CompanyName.Equals("Demo");
                     BindingContext = this;
                     _tenantSignature = GetSignature(Tenant);                 
                 }

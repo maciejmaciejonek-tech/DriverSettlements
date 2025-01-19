@@ -11,11 +11,9 @@
 
             <Label
                 x:Name="Label"
-                Text="TODO"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="24"
                 HorizontalOptions="Center" />
-
         </VerticalStackLayout>
     </ScrollView>
 

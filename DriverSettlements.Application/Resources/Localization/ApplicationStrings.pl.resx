@@ -339,6 +339,12 @@
   <data name="MasterAdminSettingsPage_AddSettlementTypes" xml:space="preserve">
     <value>Dodaj typy rozliczeń</value>
   </data>
+  <data name="Messages_NoInformation" xml:space="preserve">
+    <value>Brak informacji</value>
+  </data>
+  <data name="Messages_NotApplicable" xml:space="preserve">
+    <value>Nie dotyczy</value>
+  </data>
   <data name="Reports_BasicReport" xml:space="preserve">
     <value>Raport tygodniowy</value>
   </data>

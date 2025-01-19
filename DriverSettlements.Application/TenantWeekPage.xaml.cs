@@ -51,6 +51,12 @@ namespace DriverSettlements.App
 
         private async void TenantWeekPage_Appearing(object sender, EventArgs e)
         {
+            if (await _applicationController.TenantController.EnsureTenant())
+            {
+                DownloadBoldReport.IsVisible = !_applicationController.TenantController.Tenant.CompanyName.Equals("Demo");
+                DownloadUberReport.IsVisible = !_applicationController.TenantController.Tenant.CompanyName.Equals("Demo");
+                DownloadFreenowReport.IsVisible = !_applicationController.TenantController.Tenant.CompanyName.Equals("Demo");
+            }
             WeekPicker.HeightRequest = DownloadCustomReportButton.Height;
             Drivers = (await _applicationController.TenantController.DriversController.GetObjects())
                 .Where(d => d.Confirmed && !d.Deleted).OrderBy(d => d.CompanyName).ToList();

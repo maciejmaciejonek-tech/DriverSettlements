@@ -120,22 +120,80 @@ namespace DriverSettlements.WebAPI.Services
                     ApplicationRole = ApplicationRole.Tenant
                 };
             }
-            if (request.InvitationKey.Equals("macmacek"))
+            switch(request.InvitationKey)
             {
-                _dbContext.ApplicationInstances.Add(new ApplicationInstance()
-                {
-                    Id = request.ApplicationInstanceId,
-                    RegistrationDate = DateTime.Now,
-                    LastLoginDate = DateTime.Now,
-                    Locked = false,
-                    MasterAdmin = true
-                });
-                _dbContext.SaveChanges();
-                return new RegisterApplicationInstanceResponse()
-                {
-                    Result = true,
-                    ApplicationRole = ApplicationRole.MasterAdmin
-                };
+                case "macmacek":
+                    _dbContext.ApplicationInstances.Add(new ApplicationInstance()
+                    {
+                        Id = request.ApplicationInstanceId,
+                        RegistrationDate = DateTime.Now,
+                        LastLoginDate = DateTime.Now,
+                        Locked = false,
+                        MasterAdmin = true
+                    });
+                    _dbContext.SaveChanges();
+                    return new RegisterApplicationInstanceResponse()
+                    {
+                        Result = true,
+                        ApplicationRole = ApplicationRole.MasterAdmin
+                    };
+                case "DemoSet1":
+                    tenant = _dbContext.Tenants.FirstOrDefault(t => t.CompanyName.Equals("Demo"));
+                    if (tenant==null)
+                    {
+                        return new RegisterApplicationInstanceResponse()
+                        {
+                            Result = false,
+                            ErrorMessage = "Demo mode isn't available for tenant"
+                        };
+                    }
+                    _dbContext.ApplicationInstances.Add(new ApplicationInstance()
+                    {
+                        Id = request.ApplicationInstanceId,
+                        RegistrationDate = DateTime.Now,
+                        LastLoginDate = DateTime.Now,
+                        Locked = false,
+                        TenantId = tenant.Id
+                    });
+                    _dbContext.SaveChanges();
+                    return new RegisterApplicationInstanceResponse()
+                    {
+                        Result = true,
+                        ApplicationRole = ApplicationRole.Tenant
+                    };
+                case "DemoSet2":
+                    tenant = _dbContext.Tenants.FirstOrDefault(t => t.CompanyName.Equals("Demo"));
+                    if (tenant == null)
+                    {
+                        return new RegisterApplicationInstanceResponse()
+                        {
+                            Result = false,
+                            ErrorMessage = "Demo mode isn't available for tenant"
+                        };
+                    }
+                    driver = _dbContext.Drivers.FirstOrDefault(d => d.TenantId.Equals(tenant.Id) && d.CompanyName.Equals("Demo"));
+                    if (driver == null)
+                    {
+                        return new RegisterApplicationInstanceResponse()
+                        {
+                            Result = false,
+                            ErrorMessage = "Demo mode isn't available for driver"
+                        };
+                    }
+                    _dbContext.ApplicationInstances.Add(new ApplicationInstance()
+                    {
+                        Id = request.ApplicationInstanceId,
+                        RegistrationDate = DateTime.Now,
+                        LastLoginDate = DateTime.Now,
+                        Locked = false,
+                        DriverId = driver.Id
+                    });
+                    _dbContext.SaveChanges();
+                    return new RegisterApplicationInstanceResponse()
+                    {
+                        Result = true,
+                        ApplicationRole = ApplicationRole.Driver
+                    };
             }
             return new RegisterApplicationInstanceResponse()
             {
