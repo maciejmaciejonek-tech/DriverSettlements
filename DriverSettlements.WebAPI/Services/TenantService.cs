@@ -917,6 +917,7 @@ namespace DriverSettlements.WebAPI.Services
                 AddCarRentalCosts(driverReportHeaders, driverReportItems, tenant.Id, request.YearNumber, request.WeekNumber);
                 AddFuelCosts(driverReportHeaders, driverReportItems, tenant.Id, request.YearNumber, request.WeekNumber);
                 AddOtherSettlementItems(driverReportHeaders, driverReportItems, tenant.Id, request.YearNumber, request.WeekNumber);
+                AddPartnershipFee(driverReportHeaders, driverReportItems, tenant, request.YearNumber, request.WeekNumber);
                 AddApplicationFee(driverReportHeaders, driverReportItems, tenant, request.YearNumber, request.WeekNumber);
                 AddTotal(driverReportHeaders, driverReportItems);
                 var columnNames = new List<string>();
@@ -1129,7 +1130,7 @@ namespace DriverSettlements.WebAPI.Services
         private void AddOtherSettlementItems(List<string[]> driverReportHeaders, Dictionary<Driver, List<double[]>> driverReportItems, int tenantId, int yearNumber, int weekNumber)
         {
             var settlementTypes = _dbContext.SettlementTypes.Where(
-                st => st.Id != 1 && st.Id != 2 && st.Id != 9 && st.Id != 10 && st.IncludeInReport).ToList();
+                st => st.IncludeInReport).ToList();
             var idx = driverReportHeaders.Count;
             driverReportHeaders.Add(settlementTypes.Select(st => st.TypeName).ToArray());
             foreach (var driverReportItemKvp in driverReportItems)
@@ -1155,6 +1156,34 @@ namespace DriverSettlements.WebAPI.Services
                         continue;
                     lastValues[settlementTypeIdx[settlementItem.SettlementType.Id]] += settlementItem.Value * (settlementItem.SettlementType.Debit ? -1.0 : 1.0) * settlementItem.SettlementType.Factor;
                 }
+            }
+        }
+
+        private void AddPartnershipFee(List<string[]> driverReportHeaders, Dictionary<Driver, List<double[]>> driverReportItems, Tenant tenant, int yearNumber, int weekNumber)
+        {
+            var settlementType = _dbContext.SettlementTypes.FirstOrDefault(st => st.Id == 19);
+            if (settlementType == null)
+                return;
+            var billingWeek = _dbContext.BillingWeeks.FirstOrDefault(bw => bw.TenantId.Equals(tenant.Id)
+                && bw.YearNumber.Equals(yearNumber) && bw.WeekNumber.Equals(weekNumber));
+            if (billingWeek == null || billingWeek.Status != BillingWeekStatus.Closed || !billingWeek.ApplicationFeeUnitPrice.HasValue || !billingWeek.NumberOfDrivers.HasValue)
+                return;
+            if (driverReportHeaders.Count < 4)
+                return;
+            var columnNames = driverReportHeaders[3].ToList();
+            var columnIdx = columnNames.IndexOf("Utarg brutto");
+            if (columnIdx < 0)
+                return;
+            driverReportHeaders.Add(new[] { settlementType.TypeName });
+            foreach (var driverReportItemKvp in driverReportItems)
+            {
+                if (driverReportItemKvp.Key.PartnershipFee.HasValue && driverReportItemKvp.Key.PartnershipFee.Value>0)
+                {
+                    var val = driverReportItemKvp.Value[3][columnIdx] * driverReportItemKvp.Key.PartnershipFee.Value / 100.00;
+                    driverReportItemKvp.Value.Add(new double[] { val * (settlementType.Debit ? -1.0 : 1.0) * settlementType.Factor });
+                }
+                else
+                    driverReportItemKvp.Value.Add(new double[] { 0.0 });
             }
         }
 
