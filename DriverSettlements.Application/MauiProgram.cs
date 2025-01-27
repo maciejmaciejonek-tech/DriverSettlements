@@ -6,6 +6,7 @@ using DriverSettlements.App.CustomControls;
 using Microsoft.Extensions.Logging;
 using Maui.FreakyControls.Extensions;
 using zoft.MauiExtensions.Controls;
+using Camera.MAUI;
 
 namespace DriverSettlements.App
 {
@@ -18,6 +19,7 @@ namespace DriverSettlements.App
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseZoftAutoCompleteEntry()
+                .UseMauiCameraView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -30,15 +32,16 @@ namespace DriverSettlements.App
 #endif
                 });
 
-
-            //builder.Services.AddSingleton<IFileSaver>(FilePicker.Default);
-            //builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
             builder.Services.AddSingleton<ApplicationController>();
             builder.Services.AddSingleton<IHttpsClientHandlerService, HttpsClientHandlerService>();
             builder.Services.AddSingleton<IApplicationInstanceAsync, ApplicationInstanceService>();
             builder.Services.AddSingleton<IMasterAdminAsync, MasterAdminService>();
             builder.Services.AddSingleton<ITenantAsync, TenantService>();
             builder.Services.AddSingleton<IDriverAsync, DriverService>();
+#if ANDROID || IOS
+            builder.Services.AddSingleton<IDeviceOrientationService, DeviceOrientationService>();
+#endif
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
