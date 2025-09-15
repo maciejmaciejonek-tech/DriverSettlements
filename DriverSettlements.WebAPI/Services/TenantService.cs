@@ -403,6 +403,7 @@ namespace DriverSettlements.WebAPI.Services
                         DateFrom = firstDateOfWeek,
                         DateTo = firstDateOfWeek.AddDays(6),
                         RequestDate = DateTime.Now,
+                        DownloadDate = DateTime.Now,
                         Status = ExternalReportStatus.Unknown
                     };
                     _dbContext.ExternalReports.Add(externalReport);
