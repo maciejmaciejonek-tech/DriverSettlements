@@ -291,9 +291,11 @@ namespace DriverSettlements.App
             switch(reportType)
             {
                 case ExternalReportType.Bolt:
+                    //Earnings per driver-2025W37-Evel Sp_ z o_o_ Lublin
+                    //Zarobki na kierowcę-2025W37
                     startsWith = new[] {
-                            $"Bolt Weekly Report - {TenantWeek.YearNumber:#0000}W{TenantWeek.WeekNumber:#00}",
-                            $"Tygodniowy raport Bolt - {TenantWeek.YearNumber:#0000}W{TenantWeek.WeekNumber:#00}" };
+                            $"Earnings per driver-{TenantWeek.YearNumber:#0000}W{TenantWeek.WeekNumber:#00}",
+                            $"Zarobki na kierowcę-{TenantWeek.YearNumber:#0000}W{TenantWeek.WeekNumber:#00}" };
                     dialogTitle = "Please select Bolt report";
                     errorMessage = ApplicationStrings.TenantWeekDetailsPage_WrongBoltReportName;
                     errorDialogTitle = ApplicationStrings.ExternalReports_UploadingWeeklyReportBolt;
