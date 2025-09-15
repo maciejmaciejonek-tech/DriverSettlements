@@ -140,12 +140,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
-		<PackageReference Include="FreakyControls" Version="0.5.1" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.22" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="FreakyControls" Version="0.5.7" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
-		<PackageReference Include="zoft.MauiExtensions.Controls.AutoCompleteEntry" Version="3.0.8" />
+		<PackageReference Include="zoft.MauiExtensions.Controls.AutoCompleteEntry" Version="4.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>
