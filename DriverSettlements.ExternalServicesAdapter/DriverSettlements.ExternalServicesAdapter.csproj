@@ -30,7 +30,12 @@
 
   <ItemGroup>
     <PackageReference Include="fm.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.TraceSource" Version="9.0.9" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
