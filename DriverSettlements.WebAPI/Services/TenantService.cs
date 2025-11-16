@@ -1983,6 +1983,39 @@ namespace DriverSettlements.WebAPI.Services
             }
         }
 
+        public ReopenBillingWeekResponse ReopenBillingWeek(ReopenBillingWeekRequest request)
+        {
+            try
+            {
+                var tenant = CheckPriviledgesAndGetApplicationInstance(request);
+                var billingWeek = _dbContext.BillingWeeks.FirstOrDefault(bw => bw.TenantId.Equals(tenant.Id)
+                    && bw.YearNumber.Equals(request.YearNumber) && bw.WeekNumber.Equals(request.WeekNumber));
+                if (billingWeek == null)
+                {
+                    billingWeek = new BillingWeek();
+                    billingWeek.YearNumber = request.YearNumber;
+                    billingWeek.WeekNumber = request.WeekNumber;
+                    billingWeek.TenantId = tenant.Id;
+                    _dbContext.BillingWeeks.Add(billingWeek);
+                }
+                billingWeek.Status = BillingWeekStatus.Opened;
+                _dbContext.SaveChanges();
+                return new ReopenBillingWeekResponse()
+                {
+                    Result = true
+                };
+            }
+            catch (Exception ex)
+            {
+                _tenantServiceLogger.LogError(ex, ex.Message);
+                return new ReopenBillingWeekResponse()
+                {
+                    Result = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
+
         public GetDriverDepositValueResponse GetDriverDepositValue(GetDriverDepositValueRequest request)
         {
             try

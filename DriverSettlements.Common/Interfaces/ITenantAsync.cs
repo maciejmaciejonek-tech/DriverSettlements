@@ -47,6 +47,7 @@ namespace DriverSettlements.Common.Interfaces
         Task<UpdateSettlementTypeResponse> UpdateSettlementTypeAsync(UpdateSettlementTypeRequest request);
         Task<DeleteSettlementTypeResponse> DeleteSettlementTypeAsync(DeleteSettlementTypeRequest request);
         Task<ConfirmBillingWeekResponse> ConfirmBillingWeekAsync(ConfirmBillingWeekRequest request);
+        Task<ReopenBillingWeekResponse> ReopenBillingWeekAsync(ReopenBillingWeekRequest request);
         Task<GetDriverDepositValueResponse> GetDriverDepositValueAsync(GetDriverDepositValueRequest request);
 
         Task<string> PingAsync(string ping);

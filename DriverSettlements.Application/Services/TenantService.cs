@@ -193,6 +193,11 @@ namespace DriverSettlements.App.Services
             return await ExecuteMethodAsyncWithErrorsHandling<ConfirmBillingWeekRequest, ConfirmBillingWeekResponse>("ConfirmBillingWeek", request);
         }
 
+        public async Task<ReopenBillingWeekResponse> ReopenBillingWeekAsync(ReopenBillingWeekRequest request)
+        {
+            return await ExecuteMethodAsyncWithErrorsHandling<ReopenBillingWeekRequest, ReopenBillingWeekResponse>("ReopenBillingWeek", request);
+        }
+
         public async Task<GetDriverDepositValueResponse> GetDriverDepositValueAsync(GetDriverDepositValueRequest request)
         {
             return await ExecuteMethodAsyncWithErrorsHandling<GetDriverDepositValueRequest, GetDriverDepositValueResponse>("GetDriverDepositValue", request);

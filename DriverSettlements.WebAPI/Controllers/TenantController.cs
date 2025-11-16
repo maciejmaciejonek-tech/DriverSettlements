@@ -653,6 +653,24 @@ namespace DriverSettlements.WebAPI.Controllers
             }
         }
 
+        [HttpPost("ReopenBillingWeek")]
+        public IActionResult ReopenBillingWeek([FromBody] ReopenBillingWeekRequest request)
+        {
+            try
+            {
+                return Ok(_service.ReopenBillingWeek(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return Ok(new ReopenBillingWeekResponse()
+                {
+                    Result = false,
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+
         [HttpPost("GetDriverDepositValue")]
         public IActionResult GetDriverDepositValue(GetDriverDepositValueRequest request)
         {

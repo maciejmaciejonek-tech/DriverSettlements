@@ -41,6 +41,7 @@ namespace DriverSettlements.Common.Interfaces
         UpdateSettlementTypeResponse UpdateSettlementType(UpdateSettlementTypeRequest request);
         DeleteSettlementTypeResponse DeleteSettlementType(DeleteSettlementTypeRequest request);
         ConfirmBillingWeekResponse ConfirmBillingWeek(ConfirmBillingWeekRequest request);
+        ReopenBillingWeekResponse ReopenBillingWeek(ReopenBillingWeekRequest request);
         GetDriverDepositValueResponse GetDriverDepositValue(GetDriverDepositValueRequest request);
 
         string Ping(string ping);
