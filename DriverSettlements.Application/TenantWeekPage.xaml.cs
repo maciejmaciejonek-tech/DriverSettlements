@@ -254,6 +254,7 @@ namespace DriverSettlements.App
             }
             OpenDriversMappingsButton.IsVisible = WeekFunctionalities.IsVisible && mappingDrivers;
             ConfirmWeekButton.IsVisible = WeekFunctionalities.IsVisible && mappedDrivers;
+            OpenWeekButton.IsVisible = TenantWeek.BillingWeekStatus == BillingWeekStatus.Closed;
             RenderCustomReportDateRangeInfo();
         }
 
@@ -494,6 +495,32 @@ namespace DriverSettlements.App
         private async void CarRentalsButton_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(TenantTariffPlanAssignmentsPage));
+        }
+
+        private async void OpenWeekButton_Clicked(object sender, EventArgs e)
+        {
+            var buttonControl = sender as ButtonControl;
+            if (buttonControl == null) return;
+            try
+            {
+                buttonControl.IsInProgress = true;
+                if (await _applicationController.TenantController.ReopenBillingWeek(TenantWeek.YearNumber, TenantWeek.WeekNumber))
+                {
+                    TenantWeek.BillingWeekStatus = BillingWeekStatus.Opened;
+                    await SetTenantWeek(_applicationController.TenantController.WeekController.DeltaWeek);
+                    UpdateButtonsAndTitleGrid();
+                    RenderTenantWeek();
+                }
+            }
+            catch (Exception ex)
+            {
+                buttonControl.IsInProgress = false;
+                await DisplayAlert(Title.Text, ex.Message, "OK");
+            }
+            finally
+            {
+                buttonControl.IsInProgress = false;
+            }
         }
 
         private async void ConfirmWeekButton_Clicked(object sender, EventArgs e)

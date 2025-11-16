@@ -233,6 +233,19 @@ namespace DriverSettlements.App
             return response.Result;
         }
 
+        public async Task<bool> ReopenBillingWeek(int yearNumber, int weekNumber)
+        {
+            var response = await _tenantService.ReopenBillingWeekAsync(new ReopenBillingWeekRequest()
+            {
+                ApplicationInstanceId = _applicationController.ApplicationProfile.Id,
+                YearNumber = yearNumber,
+                WeekNumber = weekNumber
+            });
+            if (!response.Result)
+                throw new Exception(response.ErrorMessage);
+            return response.Result;
+        }
+
         public async Task<double> GetDriverDepositValue(int driverId)
         {
             var response = await _tenantService.GetDriverDepositValueAsync(new GetDriverDepositValueRequest()

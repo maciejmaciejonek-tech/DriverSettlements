@@ -210,6 +210,10 @@
                     Text="Zatwierdź tydzień" LoadingText="Zatwierdź tydzień" 
                     WidthRequest="180" FontSize="12" VerticalOptions="Center"
                     Clicked="ConfirmWeekButton_Clicked"/>
+            <customControls:ButtonControl x:Name="OpenWeekButton"
+                    Text="Otwórz tydzień" LoadingText="Otwórz tydzień" 
+                    WidthRequest="180" FontSize="12" VerticalOptions="Center"
+                    Clicked="OpenWeekButton_Clicked"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
