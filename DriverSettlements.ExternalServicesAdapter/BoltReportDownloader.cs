@@ -35,7 +35,10 @@ namespace DriverSettlements.ExternalServicesAdapter
         protected override bool IsRaportsPage(string html)
         {
             if (!html.Contains(@"<title>Kierowcy | Bolt</title>")
-                && !html.Contains(@"<title>Earnings report | Bolt</title>"))
+                && !html.Contains(@"<title>Earnings report | Bolt</title>")
+                && !html.Contains(@"<title>Raport z zarobków | Bolt</title>")
+                && !html.Contains(@"<title>Zarobki na kierowcę | Bolt</title>")
+             )
                 return false;
             return true;
         }

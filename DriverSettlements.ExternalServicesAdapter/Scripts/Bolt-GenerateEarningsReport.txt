@@ -97,29 +97,29 @@ function getYearNumber(text)
 
 function getMonthNumber(text)
 {
-    if (text.match(/(^|\ |,|\.|-)(january|jan|styczeń|sty|01|1)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(january|jan|styczeń|stycznia|sty|01|1)($|\ |,|\.|-)/i)!=null)
         return "01";
-    if (text.match(/(^|\ |,|\.|-)(february|feb|luty|lut|02|2)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(february|feb|luty|lutego|lut|02|2)($|\ |,|\.|-)/i)!=null)
         return "02";
-    if (text.match(/(^|\ |,|\.|-)(march|mar|marzec|mar|03|3)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(march|mar|marzec|marca|mar|03|3)($|\ |,|\.|-)/i)!=null)
         return "03";
-    if (text.match(/(^|\ |,|\.|-)(april|apr|kwiecień|kwi|04|4)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(april|apr|kwiecień|kwietnia|kwi|04|4)($|\ |,|\.|-)/i)!=null)
         return "04";
-    if (text.match(/(^|\ |,|\.|-)(may|maj|05|5)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(may|maj|maja|05|5)($|\ |,|\.|-)/i)!=null)
         return "05";
-    if (text.match(/(^|\ |,|\.|-)(june|jun|czerwiec|cze|06|6)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(june|jun|czerwiec|czerwca|cze|06|6)($|\ |,|\.|-)/i)!=null)
         return "06";
-    if (text.match(/(^|\ |,|\.|-)(july|jul|lipiec|lip|07|7)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(july|jul|lipiec|lipca|lip|07|7)($|\ |,|\.|-)/i)!=null)
         return "07";
-    if (text.match(/(^|\ |,|\.|-)(august|aug|sierpień|sie|08|8)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(august|aug|sierpień|sierpnia|sie|08|8)($|\ |,|\.|-)/i)!=null)
         return "08";
-    if (text.match(/(^|\ |,|\.|-)(september|sep|wrzesień|wrz|09|9)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(september|sep|wrzesień|września|wrz|09|9)($|\ |,|\.|-)/i)!=null)
         return "09";
-    if (text.match(/(^|\ |,|\.|-)(october|oct|październik|paź|10)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(october|oct|październik|października|paź|10)($|\ |,|\.|-)/i)!=null)
         return "10";
-    if (text.match(/(^|\ |,|\.|-)(november|mov|listopad|lis|11)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(november|mov|listopad|listopada|lis|11)($|\ |,|\.|-)/i)!=null)
         return "11";
-    if (text.match(/(^|\ |,|\.|-)(december|dec|grudzień|gru|12)($|\ |,|\.|-)/i)!=null)
+    if (text.match(/(^|\ |,|\.|-)(december|dec|grudzień|grudnia|gru|12)($|\ |,|\.|-)/i)!=null)
         return "12";
     return "00";
 }
@@ -234,10 +234,11 @@ function setDate(year, month, day)
     }
 }
 
-
 function downloadReport()
 {
   var elements = getElementsByText('Download','button');
+  if (elements==null || elements.length<1)
+  	elements = getElementsByText('Pobierz','button');
   if (elements==null || elements.length<1)
     return false;
   elements[0].click();
