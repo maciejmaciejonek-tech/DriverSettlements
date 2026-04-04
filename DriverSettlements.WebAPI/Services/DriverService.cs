@@ -164,26 +164,50 @@ namespace DriverSettlements.WebAPI.Services
 
         private void AddFuelCosts(Dictionary<string,double> weeklySettlementComponents, int driverId, int yearNumber, int weekNumber)
         {
-            var settlementType = _dbContext.SettlementTypes.FirstOrDefault(st => st.Id == 2);
-            if (settlementType == null)
-                return;
+            var settlements = _dbContext.SettlementTypes.Where(st => st.Id == 2 || st.Id == 25).ToDictionary(st => st.TypeName, st => st);
+            if (settlements == null || settlements.Count < 1)
+                throw new Exception("Missing fuel settlement definitions");
+            var defReportItem = ReportTemplatesHelper.GetReportTemplate(_dbContext, "Fuel report", Date.GetFirstDateOfWeek(yearNumber, weekNumber));
+            if (defReportItem == null)
+                throw new Exception("Missing fuel report definition");
+            var defValues = defReportItem?.DefReportColumns?.Where(drc => drc.DefValue != null && !settlements.ContainsKey(drc.DefValue));
+            if (defValues != null && defValues.Count() > 0)
+            {
+                var missingSettlementTypes = string.Join(", ", defValues.Select(dv => dv.DefValue));
+                throw new Exception($"Missing settlement types for fuel costs: {missingSettlementTypes}");
+            }
+            var fuelBillTypes = defReportItem?.DefReportColumns?.Skip(1).ToDictionary(drc => drc.ColumnName, drc => settlements[drc.DefValue]);
+            var defaultFuelBillType = settlements[defReportItem?.DefReportColumns?.First().DefValue];
+            var settlementValues = settlements.Keys.ToDictionary(k => k, k => 0.0);
+
             var fuelBills = _dbContext.FuelBills.Where(fb => fb.DriverId.Equals(driverId) && fb.YearNumber.Equals(yearNumber) && fb.WeekNumber.Equals(weekNumber)
                     && fb.Status == FuelBillStatus.Acccepted);
             if (fuelBills != null && fuelBills.Count() > 0)
-            { 
-                var fuelCost = fuelBills.Sum(fb => fb.Cost);
-                if (settlementType.Debit)
-                    fuelCost = -1 * fuelCost;
-                weeklySettlementComponents.Add(settlementType.TypeName, fuelCost * settlementType.Factor);
-            }
-            var settlementItems = _dbContext.SettlementItems.Where(si => si.DriverId.Equals(driverId) && si.YearNumber.Equals(yearNumber) && si.WeekNumber.Equals(weekNumber)
-                && si.SettlementTypeId.Equals(settlementType.Id));
-            if (settlementItems.Any())
             {
-                var otherFuelCost = settlementItems.Sum(si => si.Value);
-                if (settlementType.Debit)
-                    otherFuelCost = -1 * otherFuelCost;
-                weeklySettlementComponents.Add($"{settlementType.TypeName}|(others)", otherFuelCost * settlementType.Factor);
+                foreach (var fuelBill in fuelBills)
+                {
+                    var settlementType = GetSettlementType(fuelBill.ReferenceNumber);
+                    if (settlementType != null)
+                    {
+                        var fuelCost = fuelBill.Cost * settlementType.Factor;
+                        if (settlementType.Debit)
+                            fuelCost = -1 * fuelCost;
+                        settlementValues[settlementType.TypeName] += fuelCost;
+                    }
+                }
+                foreach (var settlementValueKvp in settlementValues)
+                {
+                    if (!settlementValueKvp.Value.Equals(0.0))
+                        weeklySettlementComponents.Add(settlementValueKvp.Key, settlementValueKvp.Value);
+                }
+            }
+
+            SettlementType? GetSettlementType(string referenceNumber)
+            {
+                var fuelBillTypeCode = referenceNumber.Substring(0, 1).ToUpper();
+                if (fuelBillTypes != null && fuelBillTypes.TryGetValue(fuelBillTypeCode, out SettlementType? fuelBillType))
+                    return fuelBillType;
+                return defaultFuelBillType;
             }
         }
 
