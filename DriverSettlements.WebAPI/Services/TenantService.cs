@@ -13,6 +13,7 @@ using NCalc.Domain;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
@@ -1120,32 +1121,59 @@ namespace DriverSettlements.WebAPI.Services
 
         private void AddFuelCosts(List<string[]> driverReportHeaders, Dictionary<Driver, List<double[]>> driverReportItems, int tenantId, int yearNumber, int weekNumber)
         {
-            var settlementType = _dbContext.SettlementTypes.FirstOrDefault(st => st.Id == 2);
-            if (settlementType == null)
-                return;
+            var settlements = _dbContext.SettlementTypes.Where(st => st.Id == 2 || st.Id == 25).ToDictionary(st => st.TypeName, st => st);
+            if (settlements == null || settlements.Count < 1)
+                throw new Exception("Missing fuel settlement definitions");
+            var defReportItem = ReportTemplatesHelper.GetReportTemplate(_dbContext, "Fuel report", Date.GetFirstDateOfWeek(yearNumber, weekNumber));
+            if (defReportItem == null)
+                throw new Exception("Missing fuel report definition");
+            var defValues = defReportItem?.DefReportColumns?.Where(drc => drc.DefValue != null && !settlements.ContainsKey(drc.DefValue));
+            if (defValues != null && defValues.Count() > 0)
+            {
+                var missingSettlementTypes = string.Join(", ", defValues.Select(dv => dv.DefValue));
+                throw new Exception($"Missing settlement types for fuel costs: {missingSettlementTypes}");
+            }
+            var fuelBillTypes = defReportItem?.DefReportColumns?.Skip(1).ToDictionary(drc => drc.ColumnName, drc => settlements[drc.DefValue]);
+            var defaultFuelBillType = settlements[defReportItem?.DefReportColumns?.First().DefValue];
+
             var idx = driverReportHeaders.Count;
-            driverReportHeaders.Add(new string[] { settlementType.TypeName });
+            driverReportHeaders.AddRange(settlements.Select(s => s.Value.TypeName).ToArray());
+
             foreach (var driverReportItemKvp in driverReportItems)
-                driverReportItemKvp.Value.Add(new double[] { 0 });
+                driverReportItemKvp.Value.Add(settlements.Select(s => 0.0).ToArray());
             var driverReportItemsDict = driverReportItems.ToDictionary(itemKvp => itemKvp.Key.Id, itemKvp => itemKvp.Value);
 
             var fuelBillsLookup = _dbContext.FuelBills.Where(fb => fb.TenantId.Equals(tenantId) && fb.YearNumber.Equals(yearNumber) && fb.WeekNumber.Equals(weekNumber)
-                && fb.Status == FuelBillStatus.Acccepted).ToLookup(fb => fb.DriverId, fb => fb.Cost);
+                && fb.Status == FuelBillStatus.Acccepted).ToLookup(fb => fb.DriverId, fb => fb);
             foreach (var driverFuelBillsLookupItem in fuelBillsLookup)
             {
                 if (!driverReportItemsDict.TryGetValue(driverFuelBillsLookupItem.Key, out var values))
                     throw new Exception($"Missing FuelBills.Driver for [{driverFuelBillsLookupItem.Key}]");
-                values[idx][0] += driverFuelBillsLookupItem.Sum(item => item) * (settlementType.Debit ? -1.0 : 1.0) * settlementType.Factor;
+                var settlementValues = settlements.Keys.ToDictionary(k => k, k => 0.0);
+
+                foreach (var fuelBill in driverFuelBillsLookupItem)
+                {
+                    var settlementType = GetSettlementType(fuelBill.ReferenceNumber);
+                    if (settlementType != null)
+                    {
+                        var fuelCost = fuelBill.Cost * settlementType.Factor;
+                        if (settlementType.Debit)
+                            fuelCost = -1 * fuelCost;
+                        settlementValues[settlementType.TypeName] += fuelCost;
+                    }
+                }
+                int i = 0;
+                foreach (var settlementValueKvp in settlementValues)
+                {
+                    values[idx][i++] += settlementValueKvp.Value;
+                }
             }
-            var settlementItems = _dbContext.SettlementItems.Where(si => si.TenantId.Equals(tenantId) && si.YearNumber.Equals(yearNumber) && si.WeekNumber.Equals(weekNumber)
-                && si.SettlementTypeId.Equals(settlementType.Id));
-            foreach (var settlementItem in settlementItems)
+            SettlementType? GetSettlementType(string referenceNumber)
             {
-                if (!driverReportItemsDict.TryGetValue(settlementItem.DriverId, out var values))
-                    throw new Exception($"Missing SettlementItem.Driver for [{settlementItem.Id}]");
-                if (settlementItem.SettlementType == null)
-                    throw new Exception($"Missing SettlementItemType for ID [{settlementItem.Id}]");
-                values[idx][0] += settlementItem.Value * (settlementItem.SettlementType.Debit ? -1.0 : 1.0) * settlementItem.SettlementType.Factor;
+                var fuelBillTypeCode = referenceNumber.Substring(0, 1).ToUpper();
+                if (fuelBillTypes != null && fuelBillTypes.TryGetValue(fuelBillTypeCode, out SettlementType? fuelBillType))
+                    return fuelBillType;
+                return defaultFuelBillType;
             }
         }
 
