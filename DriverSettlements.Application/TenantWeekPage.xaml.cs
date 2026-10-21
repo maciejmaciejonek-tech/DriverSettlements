@@ -254,7 +254,8 @@ namespace DriverSettlements.App
             }
             OpenDriversMappingsButton.IsVisible = WeekFunctionalities.IsVisible && mappingDrivers;
             ConfirmWeekButton.IsVisible = WeekFunctionalities.IsVisible && mappedDrivers;
-            OpenWeekButton.IsVisible = TenantWeek.BillingWeekStatus == BillingWeekStatus.Closed;
+            
+            OpenWeekButton.IsVisible = TenantWeek?.BillingWeekStatus == BillingWeekStatus.Closed;
             RenderCustomReportDateRangeInfo();
         }
 

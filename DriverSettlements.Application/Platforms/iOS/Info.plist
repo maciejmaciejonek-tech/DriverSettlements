@@ -26,13 +26,13 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera to take photos.</string>
+	<string>This app needs access to the camera to take photos of fuel receipts.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to microphone for taking videos.</string>
+	<string>This app requires access to the microphone to record videos of car inspections.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs access to the photo gallery for picking photos and videos.</string>
+	<string>This app needs access to the photo gallery for picking photos of fuel receipts.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to photos gallery for picking photos and videos.</string>
+	<string>This app needs access to photos gallery for picking photos of fuel receipts.</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleDisplayName</key>
@@ -40,6 +40,6 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.macmac.driversettlements</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.31\2</string>
+	<string>1.0.35</string>
 </dict>
 </plist>

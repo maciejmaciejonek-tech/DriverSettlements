@@ -98,7 +98,7 @@ namespace DriverSettlements.App
             buttonControl.IsInProgress = true;
             try
             {
-                _fuelBill.Date = DatePicker.Date;
+                _fuelBill.Date = DatePicker.Date.Value;
                 _fuelBill.Cost = double.Parse(Price.Text.Replace(',','.'), CultureInfo.InvariantCulture);
                 _fuelBill.ReferenceNumber = ReferenceNumber.Text;
                 if (_mode == Mode.AddNew)
