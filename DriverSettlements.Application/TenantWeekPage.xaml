@@ -27,7 +27,7 @@
         <HorizontalStackLayout Grid.Row="0" x:Name="FilterDriverPanel" IsVisible="false" HorizontalOptions="Center" Padding="3">
             <zoft:AutoCompleteEntry Grid.Row="0" Grid.Column="2" x:Name="DriverName"
                 Placeholder="Wyszukaj imię i nazwisko kierowcy" TextMemberPath="CompanyName" DisplayMemberPath="CompanyName"
-                WidthRequest="400" MaximumWidthRequest="400" FontSize="14" ItemsSource="{Binding Drivers}"
+                WidthRequest="400" MaximumWidthRequest="400" HeightRequest="44" FontSize="14" ItemsSource="{Binding Drivers}"
                 TextChanged="DriverName_TextChanged" SuggestionChosen="DriverName_SuggestionChosen"/>
         </HorizontalStackLayout>
         <Grid Grid.Row="1" x:Name="TitleGrid" ColumnDefinitions="Auto,*,Auto" Padding="5">
